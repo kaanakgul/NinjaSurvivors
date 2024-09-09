@@ -15,7 +15,15 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 direction = (targetDestination.position -transform.position).normalized;
+        Vector3 direction = (targetDestination.position - transform.position).normalized;
         rb.velocity = direction * speed;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<Charachter>())
+        {
+            Debug.Log("You Take Damage");
+        }
     }
 }
