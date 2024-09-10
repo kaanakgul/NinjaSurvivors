@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Charachter : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float health = 100.0f;
+    public bool isDead;
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+
+        if (health == 0 && isDead == false)
+        {
+            gameObject.SetActive(false);
+            isDead = true;
+
+        }
+
     }
 }
+
