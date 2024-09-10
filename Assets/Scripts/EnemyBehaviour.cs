@@ -11,6 +11,7 @@ public class EnemyBehaviour : MonoBehaviour
     public float damage;
     public float attackSpeed = 0.5f;
     protected bool attacking = false;
+    private Coroutine attackroutine;
     
 
     private void Awake()
@@ -28,10 +29,18 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (!attacking)
         {
-            StartCoroutine(DealDamage(collision));
+            attackroutine = StartCoroutine(DealDamage(collision));
             attacking = true;
         }
 
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+      
+        StopCoroutine(attackroutine);
+        attacking=false;
+        Debug.Log("asd");
+        
     }
 
     public IEnumerator DealDamage(Collision2D collision)
