@@ -563848,7 +563848,7 @@ GameObject:
   - component: {fileID: 1962688403}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -563891,9 +563891,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingLayerID: -562793529
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 272745941, guid: 14dbf2e59288d9549aa3400aaff39c48, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -563952,7 +563952,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.007519841, y: -0.010026462}
+  m_Offset: {x: -0.0034883022, y: -0.10084334}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -563963,7 +563963,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.24699205, y: 0.24598943}
+  m_Size: {x: 0.863446, y: 0.79089063}
   m_EdgeRadius: 0
 --- !u!50 &1962688401
 Rigidbody2D:
@@ -564019,6 +564019,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   isDead: 0
+--- !u!1 &1970616202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1970616204}
+  - component: {fileID: 1970616203}
+  m_Layer: 0
+  m_Name: SpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1970616203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970616202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50a96bde732c983469602f22daed24cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 6195579143891750045, guid: edd98d813521e9e448be00130d7e485f, type: 3}
+  player: {fileID: 1962688399}
+  spawnInterval: 3
+  maxEnemies: 1000
+  spawnRadius: 5
+--- !u!4 &1970616204
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970616202}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.047453, y: 0.12889609, z: -0.17338979}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -564026,5 +564075,5 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1962688399}
   - {fileID: 986509518}
-  - {fileID: 12043499}
   - {fileID: 1219392348}
+  - {fileID: 1970616204}
