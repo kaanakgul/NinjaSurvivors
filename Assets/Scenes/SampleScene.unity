@@ -616684,6 +616684,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  animator: {fileID: 0}
+  up: {fileID: 0}
+  down: {fileID: 0}
+  right: {fileID: 0}
+  left: {fileID: 0}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  doorMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &1962688403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -616729,9 +616740,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 6195579143891750045, guid: edd98d813521e9e448be00130d7e485f, type: 3}
   player: {fileID: 1962688399}
-  spawnInterval: 3
-  maxEnemies: 1000
   spawnRadius: 5
+  spawnRate: 2
+  maxEnemies: 1000
 --- !u!4 &1970616204
 Transform:
   m_ObjectHideFlags: 0
