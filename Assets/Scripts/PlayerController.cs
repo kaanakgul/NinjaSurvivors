@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;
 
+    public float obstacleDistance;
+
     const float InputThreshold = 0f;
 
     const string UpKey = "WalkUp";
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -126,22 +129,26 @@ public class PlayerController : MonoBehaviour
     {
         Transform check = up;
 
+        Vector3 vec;
+
         if (dir == Direction.Left)
         {
-            check = left;
+            vec = transform.position - Vector3.right * obstacleDistance;
         }
         else if (dir == Direction.Right)
         {
-            check = right;
+            vec = transform.position + Vector3.right * obstacleDistance;
         }
         else if (dir == Direction.Up)
         {
-            check = up;
+            vec = transform.position + Vector3.up * obstacleDistance;
         }
-        else { check = down; }
+        else { vec = transform.position - Vector3.up * obstacleDistance; }
+
+        
 
       
-        Collider2D cols = Physics2D.OverlapBox(check.position, Vector3.one / 5f, 0, obstacleMask);
+        Collider2D cols = Physics2D.OverlapBox(vec, Vector3.one / 5f, 0, obstacleMask);
 
 
 
