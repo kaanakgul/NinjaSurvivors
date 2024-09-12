@@ -67,38 +67,33 @@ public class PlayerController : MonoBehaviour
 
         Vector3 movement = Vector3.zero;
 
-
         if (up)
         {
             if (IsObstacleAhaed(Direction.Up)) return;
 
             ChangeAnimation(UpKey);
-
-            movement += Vector3.up * speed * Time.deltaTime;
+            movement += Vector3.up;
         }
         if (down)
         {
             if (IsObstacleAhaed(Direction.Down)) return;
 
             ChangeAnimation(DownKey);
-
-            movement += Vector3.down * speed * Time.deltaTime;
+            movement += Vector3.down;
         }
         if (right)
         {
             if (IsObstacleAhaed(Direction.Right)) return;
 
             ChangeAnimation(RightKey);
-
-            movement += Vector3.right * speed * Time.deltaTime;
+            movement += Vector3.right;
         }
         if (left)
         {
             if (IsObstacleAhaed(Direction.Left)) return;
 
             ChangeAnimation(LeftKey);
-
-            movement += Vector3.left * speed * Time.deltaTime;
+            movement += Vector3.left;
         }
 
         if (!down && !up && !right && !left)
@@ -106,8 +101,16 @@ public class PlayerController : MonoBehaviour
             ChangeAnimation(IdleKey);
         }
 
-        transform.position += movement;
+        // Normalize the movement vector if moving diagonally
+        if (movement.magnitude > 1f)
+        {
+            movement.Normalize();
+        }
+
+        // Apply movement with speed
+        transform.position += movement * speed * Time.deltaTime;
     }
+
 
     void ChangeAnimation(string animationName)
     {
