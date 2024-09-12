@@ -2,49 +2,84 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;  // The enemy prefab to spawn
-    public Transform player;        // Reference to the player's Transform
-    public float spawnInterval = 2f; // Time between each spawn
-    public int maxEnemies = 10;      // Maximum number of enemies
-    public float spawnRadius = 5f;   // Radius around the player to spawn enemies
+    public GameObject enemyPrefab; // Reference to the enemy prefab
+    public Transform player; // Reference to the player
+    public float spawnRadius = 20f; // Distance from the player at which enemies spawn
+    public float spawnRate = 2f; // Time between spawns
+    public int maxEnemies = 20; // Maximum number of enemies to spawn
+    private Camera mainCamera; // Reference to the main camera
 
-    private int enemyCount = 0;
+    private List<GameObject> spawnedEnemies = new List<GameObject>(); // Track spawned enemies
 
-    void Start()
+    private void Start()
     {
+        mainCamera = Camera.main; // Get reference to the main camera
         StartCoroutine(SpawnEnemies());
     }
 
-    IEnumerator SpawnEnemies()
+    private IEnumerator SpawnEnemies()
     {
-        while (enemyCount < maxEnemies)
+        while (true)
         {
-            SpawnEnemyAroundPlayer();
-            enemyCount++;
+            if (spawnedEnemies.Count < maxEnemies)
+            {
+                // Calculate a random position outside the camera's view and within a certain radius from the player
+                Vector3 spawnPosition = GetSpawnPositionOutsideCamera();
 
-            yield return new WaitForSeconds(spawnInterval);
+                // Instantiate the enemy at the spawn position and keep track of it
+                GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+                spawnedEnemies.Add(enemy);
+
+                // Set the target (player) for the enemy to move towards
+                enemy.GetComponent<EnemyBehaviour>().SetTarget(player);
+            }
+
+            // Wait before spawning the next enemy
+            yield return new WaitForSeconds(spawnRate);
         }
     }
 
-    void SpawnEnemyAroundPlayer()
+    // Method to get a random spawn position outside the camera's view and within a radius around the player
+    private Vector3 GetSpawnPositionOutsideCamera()
     {
-        if (player != null)
-        {
-            // Generate a random position within a radius around the player
-            Vector2 randomPosition = (Vector2)player.position + Random.insideUnitCircle * spawnRadius;
+        Vector3 spawnPosition;
 
-            // Instantiate the enemy at the random position
-            GameObject newEnemy = Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
+        // Get the camera's bounds in world coordinates
+        Vector3 cameraPosition = mainCamera.transform.position;
+        float cameraHeight = 2f * mainCamera.orthographicSize;
+        float cameraWidth = cameraHeight * mainCamera.aspect;
 
-            // Assign the player's Transform to the enemy's script
-            newEnemy.GetComponent<EnemyBehaviour>().SetTarget(player);
-        }
-        else
+        // Calculate the camera bounds
+        float xMin = cameraPosition.x - cameraWidth / 2;
+        float xMax = cameraPosition.x + cameraWidth / 2;
+        float yMin = cameraPosition.y - cameraHeight / 2;
+        float yMax = cameraPosition.y + cameraHeight / 2;
+
+        int maxAttempts = 100; // Safeguard: max number of attempts to find a valid spawn point
+        int attempts = 0;
+
+        do
         {
-            Debug.LogWarning("Player reference is missing!");
-        }
+            // Get a random direction in a circle
+            Vector2 randomDirection = Random.insideUnitCircle.normalized;
+
+            // Calculate a spawn position in a circle around the player
+            spawnPosition = player.position + (Vector3)(randomDirection * spawnRadius);
+
+            attempts++;
+
+            // Break out of the loop if too many attempts have been made to find a valid position
+            if (attempts >= maxAttempts)
+            {
+                Debug.LogWarning("Max attempts reached for finding a valid spawn position.");
+                break;
+            }
+
+        } while (spawnPosition.x > xMin && spawnPosition.x < xMax && spawnPosition.y > yMin && spawnPosition.y < yMax);
+
+        return spawnPosition;
     }
+
 }

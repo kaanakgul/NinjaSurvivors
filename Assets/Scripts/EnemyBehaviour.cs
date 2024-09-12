@@ -39,6 +39,14 @@ public class EnemyBehaviour : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && !attacking)
         {
             // Start the damage coroutine if not already attacking
+
+
+            if(attackRoutine != null)
+            {
+                StopCoroutine(attackRoutine);
+            }
+
+
             attackRoutine = StartCoroutine(DealDamage(collision.gameObject));
             attacking = true;
         }
@@ -51,6 +59,8 @@ public class EnemyBehaviour : MonoBehaviour
         {
             StopCoroutine(attackRoutine);
             attacking = false;
+
+            attackRoutine = null;
         }
     }
 
