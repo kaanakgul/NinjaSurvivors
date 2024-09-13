@@ -1,17 +1,18 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
     private Transform targetDestination; // Reference to the player's Transform
-    [SerializeField] float speed = 2f; // Speed of enemy movement
-    [SerializeField] float damage = 10f; // Damage dealt to the player
+    [SerializeField] private float speed = 2f; // Speed of enemy movement
+    [SerializeField] private float damage = 10f; // Damage dealt to the player
     public float attackSpeed = 0.5f; // Time between attacks
     private bool attacking = false; // Is the enemy currently attacking?
     private Coroutine attackRoutine; // To store the attack coroutine
     private Rigidbody2D rb; // Rigidbody2D for movement
+
+    // Enemy stats
+    public float health = 100f;
 
     private void Awake()
     {
@@ -33,19 +34,24 @@ public class EnemyBehaviour : MonoBehaviour
         targetDestination = playerTransform;
     }
 
+    // Method to set enemy stats (called from EnemySpawner)
+    public void SetStats(float newHealth, float newSpeed, float newDamage)
+    {
+        health = newHealth;
+        speed = newSpeed;
+        damage = newDamage;
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         // Check if the enemy is colliding with the player
         if (collision.gameObject.CompareTag("Player") && !attacking)
         {
             // Start the damage coroutine if not already attacking
-
-
-            if(attackRoutine != null)
+            if (attackRoutine != null)
             {
                 StopCoroutine(attackRoutine);
             }
-
 
             attackRoutine = StartCoroutine(DealDamage(collision.gameObject));
             attacking = true;
@@ -59,7 +65,6 @@ public class EnemyBehaviour : MonoBehaviour
         {
             StopCoroutine(attackRoutine);
             attacking = false;
-
             attackRoutine = null;
         }
     }
@@ -67,7 +72,7 @@ public class EnemyBehaviour : MonoBehaviour
     // Coroutine for dealing damage to the player
     private IEnumerator DealDamage(GameObject player)
     {
-        Debug.Log("Starting to deal damage to player");  // Add this for debugging
+        Debug.Log("Starting to deal damage to player");
         Charachter characterComponent = player.GetComponent<Charachter>();
 
         // Make sure the player has a Charachter component and isn't dead
@@ -86,5 +91,21 @@ public class EnemyBehaviour : MonoBehaviour
         }
 
         attacking = false; // Ensure attacking state resets if the player is dead
+    }
+
+    // Example of taking damage to the enemy itself
+    public void TakeDamage(float amount)
+    {
+        health -= amount;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    // Handle enemy death
+    private void Die()
+    {
+        Destroy(gameObject); // Destroy enemy object on death
     }
 }
