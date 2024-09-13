@@ -21889,7 +21889,7 @@ GameObject:
   - component: {fileID: 600884063}
   - component: {fileID: 600884065}
   - component: {fileID: 600884064}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -687735,7 +687735,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1970616203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -687753,6 +687753,10 @@ MonoBehaviour:
   spawnRadius: 5
   spawnRate: 2
   maxEnemies: 1000
+  maxX: 111
+  minY: -111
+  maxY: 111
+  minX: -111
 --- !u!4 &1970616204
 Transform:
   m_ObjectHideFlags: 0
