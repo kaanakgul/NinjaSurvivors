@@ -6,7 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab; // Reference to the enemy prefab
     public Transform player; // Reference to the player
-    public float spawnRadius = 20f; // Distance from the player at which enemies spawn
+    public float spawnRadius = 500f; // Distance from the player at which enemies spawn
     public float spawnRate = 2f; // Time between spawns
     public int maxEnemies = 20; // Maximum number of enemies to spawn
     private Camera mainCamera; // Reference to the main camera
@@ -51,33 +51,34 @@ public class EnemySpawner : MonoBehaviour
         float cameraHeight = 2f * mainCamera.orthographicSize;
         float cameraWidth = cameraHeight * mainCamera.aspect;
 
-        // Calculate the camera bounds
-        float xMin = cameraPosition.x - cameraWidth / 2;
-        float xMax = cameraPosition.x + cameraWidth / 2;
-        float yMin = cameraPosition.y - cameraHeight / 2;
-        float yMax = cameraPosition.y + cameraHeight / 2;
+        // Expand the bounds slightly so enemies spawn outside the visible area
+        float xMin = cameraPosition.x - cameraWidth / 2 - spawnRadius;
+        float xMax = cameraPosition.x + cameraWidth / 2 + spawnRadius;
+        float yMin = cameraPosition.y - cameraHeight / 2 - spawnRadius;
+        float yMax = cameraPosition.y + cameraHeight / 2 + spawnRadius;
 
-        int maxAttempts = 100; // Safeguard: max number of attempts to find a valid spawn point
-        int attempts = 0;
+        // Ensure spawn occurs outside of the camera's view, by placing it beyond the bounds
+        // Pick a random side (left, right, top, bottom) to spawn from
+        int side = Random.Range(0, 4); // 0=left, 1=right, 2=top, 3=bottom
 
-        do
+        switch (side)
         {
-            // Get a random direction in a circle
-            Vector2 randomDirection = Random.insideUnitCircle.normalized;
-
-            // Calculate a spawn position in a circle around the player
-            spawnPosition = player.position + (Vector3)(randomDirection * spawnRadius);
-
-            attempts++;
-
-            // Break out of the loop if too many attempts have been made to find a valid position
-            if (attempts >= maxAttempts)
-            {
-                Debug.LogWarning("Max attempts reached for finding a valid spawn position.");
+            case 0: // Left
+                spawnPosition = new Vector3(xMin, Random.Range(yMin, yMax), 0);
                 break;
-            }
-
-        } while (spawnPosition.x > xMin && spawnPosition.x < xMax && spawnPosition.y > yMin && spawnPosition.y < yMax);
+            case 1: // Right
+                spawnPosition = new Vector3(xMax, Random.Range(yMin, yMax), 0);
+                break;
+            case 2: // Top
+                spawnPosition = new Vector3(Random.Range(xMin, xMax), yMax, 0);
+                break;
+            case 3: // Bottom
+                spawnPosition = new Vector3(Random.Range(xMin, xMax), yMin, 0);
+                break;
+            default:
+                spawnPosition = new Vector3(xMin, yMin, 0); // Default to bottom-left
+                break;
+        }
 
         return spawnPosition;
     }
