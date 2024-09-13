@@ -4,8 +4,8 @@ using UnityEngine;
 public class EnemyBehaviour : MonoBehaviour
 {
     private Transform targetDestination; // Reference to the player's Transform
-    [SerializeField] private float speed = 2f; // Speed of enemy movement
-    [SerializeField] private float damage = 10f; // Damage dealt to the player
+    [SerializeField] private float speed; // Speed of enemy movement
+    [SerializeField] private float damage; // Damage dealt to the player
     public float attackSpeed = 0.5f; // Time between attacks
     private bool attacking = false; // Is the enemy currently attacking?
     private Coroutine attackRoutine; // To store the attack coroutine
@@ -35,11 +35,12 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     // Method to set enemy stats (called from EnemySpawner)
-    public void SetStats(float newHealth, float newSpeed, float newDamage)
+    public void SetStats(float newHealth, float newSpeed, float newDamage, float newAttackSpeed)
     {
         health = newHealth;
         speed = newSpeed;
         damage = newDamage;
+        attackSpeed = newAttackSpeed;
     }
 
     private void OnCollisionStay2D(Collision2D collision)

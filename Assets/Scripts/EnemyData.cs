@@ -11,4 +11,5 @@ using UnityEngine;
         public float health;          // Health of the enemy
         public float speed;           // Speed of the enemy
         public float damage;          // Damage the enemy deals
+        public float attackSpeed;     // How often the enemy attacks
     }

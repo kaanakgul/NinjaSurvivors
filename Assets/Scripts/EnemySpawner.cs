@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
                 enemy.GetComponent<EnemyBehaviour>().SetTarget(player);
 
                 // Set the stats for the enemy
-                enemy.GetComponent<EnemyBehaviour>().SetStats(enemyToSpawn.speed, enemyToSpawn.damage, enemyToSpawn.health);
+                enemy.GetComponent<EnemyBehaviour>().SetStats(enemyToSpawn.health, enemyToSpawn.speed, enemyToSpawn.damage, enemyToSpawn.attackSpeed);
             }
 
             // Wait before spawning the next enemy
