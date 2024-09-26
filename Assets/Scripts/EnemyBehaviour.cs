@@ -11,11 +11,14 @@ public class EnemyBehaviour : MonoBehaviour
     private Coroutine attackRoutine; // To store the attack coroutine
     private Rigidbody2D rb; // Rigidbody2D for movement
 
+    public Animator animator;
+
     // Enemy stats
     public float health = 100f;
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>(); // Get Rigidbody2D component
     }
 
@@ -25,6 +28,9 @@ public class EnemyBehaviour : MonoBehaviour
         {
             Vector3 direction = (targetDestination.position - transform.position).normalized;
             rb.velocity = direction * speed;
+
+            // Call the animation method to update based on movement direction
+            UpdateAnimations(direction);
         }
     }
 
@@ -108,5 +114,40 @@ public class EnemyBehaviour : MonoBehaviour
     private void Die()
     {
         Destroy(gameObject); // Destroy enemy object on death
+    }
+
+    // New method to handle animation updates based on movement direction
+    private void UpdateAnimations(Vector3 direction)
+    {
+        if (animator != null)
+        {
+            // Determine which direction the enemy is moving and trigger the corresponding animation
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            {
+                if (direction.x > 0)
+                {
+                    // Moving Right
+                    animator.SetTrigger("WalkRight");
+                }
+                else
+                {
+                    // Moving Left
+                    animator.SetTrigger("WalkLeft");
+                }
+            }
+            else
+            {
+                if (direction.y > 0)
+                {
+                    // Moving Up
+                    animator.SetTrigger("WalkUp");
+                }
+                else
+                {
+                    // Moving Down
+                    animator.SetTrigger("WalkDown");
+                }
+            }
+        }
     }
 }
