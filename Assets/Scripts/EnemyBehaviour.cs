@@ -11,10 +11,10 @@ public class EnemyBehaviour : MonoBehaviour
     private Coroutine attackRoutine; // To store the attack coroutine
     private Rigidbody2D rb; // Rigidbody2D for movement
 
-    public Animator animator;
-
     // Enemy stats
     public float health = 100f;
+
+    public Animator animator;
 
     private void Awake()
     {
@@ -121,18 +121,24 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (animator != null)
         {
+            // Reset all movement booleans
+            animator.SetBool("WalkUp", false);
+            animator.SetBool("WalkDown", false);
+            animator.SetBool("WalkRight", false);
+            animator.SetBool("WalkLeft", false);
+
             // Determine which direction the enemy is moving and trigger the corresponding animation
             if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
             {
                 if (direction.x > 0)
                 {
                     // Moving Right
-                    animator.SetTrigger("WalkRight");
+                    animator.SetBool("WalkRight", true);
                 }
                 else
                 {
                     // Moving Left
-                    animator.SetTrigger("WalkLeft");
+                    animator.SetBool("WalkLeft", true);
                 }
             }
             else
@@ -140,12 +146,12 @@ public class EnemyBehaviour : MonoBehaviour
                 if (direction.y > 0)
                 {
                     // Moving Up
-                    animator.SetTrigger("WalkUp");
+                    animator.SetBool("WalkUp", true);
                 }
                 else
                 {
                     // Moving Down
-                    animator.SetTrigger("WalkDown");
+                    animator.SetBool("WalkDown", true);
                 }
             }
         }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2081954045597720886}
   - component: {fileID: 8632965759049114954}
   - component: {fileID: 7662325934748996410}
+  - component: {fileID: -8320121042564751100}
   - component: {fileID: 4689643176565803266}
   - component: {fileID: 1468319369998513861}
   m_Layer: 0
@@ -103,6 +104,28 @@ MonoBehaviour:
   damage: 0
   attackSpeed: 0.5
   health: 100
+  animator: {fileID: -8320121042564751100}
+--- !u!95 &-8320121042564751100
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2230099778332331954}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fd2f5cd6a28d042488ebe89010723c8a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &4689643176565803266
 Rigidbody2D:
   serializedVersion: 4
