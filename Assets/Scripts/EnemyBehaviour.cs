@@ -1,9 +1,10 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;  
 
 public class EnemyBehaviour : MonoBehaviour
 {
-    private Transform targetDestination; // Reference to the player's Transform
+    [SerializeField] Transform targetDestination; // Reference to the player's Transform
     [SerializeField] private float speed; // Speed of enemy movement
     [SerializeField] private float damage; // Damage dealt to the player
     public float attackSpeed = 0.5f; // Time between attacks
@@ -15,6 +16,8 @@ public class EnemyBehaviour : MonoBehaviour
     public float health = 100f;
 
     public Animator animator;
+
+    public NavMeshAgent navMeshAgent;
 
     private void Awake()
     {
@@ -47,6 +50,13 @@ public class EnemyBehaviour : MonoBehaviour
         speed = newSpeed;
         damage = newDamage;
         attackSpeed = newAttackSpeed;
+    }
+
+    public void Start()
+    {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.updateRotation = false;
+        navMeshAgent.updateUpAxis = false;
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -110,7 +120,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    // Handle enemy death
+    // Handle enemy death   
     private void Die()
     {
         Destroy(gameObject); // Destroy enemy object on death
