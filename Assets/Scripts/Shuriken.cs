@@ -9,6 +9,8 @@ public class ShurikenBehavior : MonoBehaviour
     public float rotationSpeed = 360f; // Speed of shuriken rotation in degrees per second
     private Rigidbody2D rb; // Rigidbody2D reference for physics-based movement
 
+    public float damageAmount = 50f; // Damage the shuriken will deal to enemies
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -39,14 +41,27 @@ public class ShurikenBehavior : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Only destroy enemy objects and shuriken upon collision with enemies
+        // Check if the collision is with an enemy
         if (collision.CompareTag("Enemy"))
         {
-            // Destroy the enemy object
-            Destroy(collision.gameObject);
+            // Call the doDamage function to apply damage to the enemy
+            doDamage(collision);
 
-            // Destroy the shuriken
+            // Destroy the shuriken after hitting the enemy
             Destroy(gameObject);
+        }
+    }
+
+    // Method to deal damage to the enemy
+    private void doDamage(Collider2D enemy)
+    {
+        // Get the EnemyBehaviour component from the collided object
+        EnemyBehaviour enemyBehaviour = enemy.GetComponent<EnemyBehaviour>();
+
+        // If the enemy has an EnemyBehaviour component, apply damage
+        if (enemyBehaviour != null)
+        {
+            enemyBehaviour.TakeDamage(damageAmount); // Apply 50 damage to the enemy's health
         }
     }
 }
