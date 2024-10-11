@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
 
     public float maxX, minY, maxY, minX;
     private int availableEnemyIndex = 0; // Tracks how many enemy types are unlocked
-    private float nextIntervalTime = 30f; // Initial time to unlock the next enemy type
+    private float nextIntervalTime = 90f; // Initial time to unlock the next enemy type
 
     // Variables to control spawn rate scaling
     public float timeBeforeScaling = 30f; // How much time (in seconds) before spawn rate starts scaling
@@ -61,7 +61,7 @@ public class EnemySpawner : MonoBehaviour
             availableEnemyIndex++; // Unlock the next enemy type
             Debug.Log("Unlocked new enemy type: " + enemyTypes[availableEnemyIndex].prefab.name);
 
-            nextIntervalTime += 60f; // Increase the interval (you can adjust this as needed)
+            //nextIntervalTime += 60f; // Increase the interval (you can adjust this as needed)
         }
     }
 
