@@ -2,19 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class PlayerAttack : MonoBehaviour
 {
-    public GameObject shurikenPrefab; // Prefab of the shuriken
-    public Transform firePoint; // Where the shuriken will spawn
-    public float fireRate = 0.5f; // How often to fire the shuriken
-
-    private Vector2 lastMoveDirection = Vector2.right; // Default direction is right
-    private Coroutine fireCoroutine;
+    public WeaponManager weaponManager; // Reference to the WeaponManager
+    private Vector2 lastMoveDirection = Vector2.right; // Default move direction is right
 
     private void Start()
     {
-        fireCoroutine = StartCoroutine(FireShurikenRoutine());
+        if (weaponManager == null)
+        {
+            weaponManager = GetComponent<WeaponManager>(); // Get the WeaponManager if not assigned
+        }
     }
 
     private void Update()
@@ -24,27 +22,10 @@ public class PlayerAttack : MonoBehaviour
 
         if (moveInput != Vector2.zero)
         {
-            lastMoveDirection = moveInput.normalized;
+            lastMoveDirection = moveInput.normalized; // Update the direction based on movement
         }
-    }
 
-    private IEnumerator FireShurikenRoutine()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(fireRate);
-
-            // Fire the shuriken in the last move direction
-            FireShuriken(lastMoveDirection);
-        }
-    }
-
-    private void FireShuriken(Vector2 direction)
-    {
-        GameObject shuriken = Instantiate(shurikenPrefab, firePoint.position, Quaternion.identity);
-
-        // Set the direction of the shuriken
-        ShurikenBehavior shurikenScript = shuriken.GetComponent<ShurikenBehavior>();
-        shurikenScript.SetDirection(direction);
+        // Update firing direction for ranged weapons
+      //  weaponManager.SetFireDirection(lastMoveDirection); // Pass the direction to the WeaponManager
     }
 }

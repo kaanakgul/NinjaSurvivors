@@ -21,6 +21,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Awake()
     {
+        navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>(); // Get Rigidbody2D component
     }
@@ -30,7 +31,7 @@ public class EnemyBehaviour : MonoBehaviour
         if (targetDestination != null)
         {
             Vector3 direction = (targetDestination.position - transform.position).normalized;
-            rb.velocity = direction * speed;
+            navMeshAgent.SetDestination(targetDestination.position);
 
             // Call the animation method to update based on movement direction
             UpdateAnimations(direction);
@@ -54,7 +55,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
     }
