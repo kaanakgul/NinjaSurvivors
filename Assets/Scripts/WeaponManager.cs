@@ -4,29 +4,24 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    public List<WeaponBehavior> activeWeapons = new List<WeaponBehavior>(); // List of currently active weapons
+    public List<WeaponData> weaponDataList; // List to hold weapon data
     public Transform firePoint; // Where weapons (projectiles, etc.) will spawn from
     private Vector2 currentFireDirection = Vector2.right; // Default fire direction
+    private List<WeaponBehavior> activeWeapons = new List<WeaponBehavior>(); // List of currently active weapons
 
     private void Start()
     {
-        StartCoroutine(FireWeapons()); // Start the firing loop for active weapons
-    }
-
-    // Method to add a new weapon to the active weapon list
-    public void AddWeapon(WeaponBehavior newWeapon)
-    {
-        if (!activeWeapons.Contains(newWeapon))
+        // Initialize active weapons from weapon data
+        foreach (var weaponData in weaponDataList)
         {
-            activeWeapons.Add(newWeapon);
+            WeaponBehavior weapon = Instantiate(weaponData.prefab, transform).GetComponent<WeaponBehavior>();
+            weapon.damageAmount = weaponData.damageAmount;
+            weapon.cooldown = weaponData.cooldown;
+            weapon.isRanged = weaponData.isRanged;
+            activeWeapons.Add(weapon);
         }
-    }
 
-    // Upgrades an existing weapon (increase damage, fire rate, etc.)
-    public void UpgradeWeapon(WeaponBehavior weapon)
-    {
-        weapon.damageAmount *= 1.5f; // Example: Increase damage by 50%
-        weapon.cooldown *= 0.9f; // Example: Decrease cooldown by 10%
+        StartCoroutine(FireWeapons()); // Start the firing loop for active weapons
     }
 
     // Sets the direction for firing ranged weapons
@@ -58,7 +53,7 @@ public class WeaponManager : MonoBehaviour
         if (weapon.isRanged)
         {
             // Instantiate and fire ranged weapon projectiles
-            WeaponBehavior projectile = Instantiate(weapon, firePoint.position, Quaternion.identity);
+            WeaponBehavior projectile = Instantiate(weapon.gameObject, firePoint.position, Quaternion.identity).GetComponent<WeaponBehavior>();
             projectile.SetDirection(currentFireDirection); // Set direction for the projectile
         }
         else
@@ -67,6 +62,4 @@ public class WeaponManager : MonoBehaviour
             StartCoroutine(weapon.HandleVisibility()); // Show melee weapon during the attack
         }
     }
-
-    // Optional: Add logic for weapon removal, cooldown management, etc.
 }
