@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public WeaponManager weaponManager; // Reference to the WeaponManager
-    private Vector2 lastMoveDirection = Vector2.right; // Default move direction is right
+    public WeaponManager weaponManager;
+    public float fireRate = 0.5f; // Fire rate interval
+    private Vector2 lastMoveDirection = Vector2.right; // Default direction is right
+    private Coroutine fireCoroutine;
 
     private void Start()
     {
         if (weaponManager == null)
         {
-            weaponManager = GetComponent<WeaponManager>(); // Get the WeaponManager if not assigned
+            Debug.LogError("WeaponManager is not assigned in PlayerAttack.");
+            return;
         }
+
+        fireCoroutine = StartCoroutine(FireWeaponRoutine());
     }
 
     private void Update()
@@ -22,10 +27,17 @@ public class PlayerAttack : MonoBehaviour
 
         if (moveInput != Vector2.zero)
         {
-            lastMoveDirection = moveInput.normalized; // Update the direction based on movement
+            lastMoveDirection = moveInput.normalized;
+            weaponManager.SetFireDirection(lastMoveDirection); // Pass updated direction to WeaponManager
         }
+    }
 
-        // Update firing direction for ranged weapons
-      //  weaponManager.SetFireDirection(lastMoveDirection); // Pass the direction to the WeaponManager
+    private IEnumerator FireWeaponRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(fireRate);
+            weaponManager.SetFireDirection(lastMoveDirection); // Ensure WeaponManager has the correct direction
+        }
     }
 }

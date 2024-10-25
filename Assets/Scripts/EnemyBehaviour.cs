@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;  
+using UnityEngine.AI;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -14,9 +14,9 @@ public class EnemyBehaviour : MonoBehaviour
 
     // Enemy stats
     public float health = 100f;
+    public EnemyData enemyData; // Reference to enemy data scriptable object
 
     public Animator animator;
-
     public NavMeshAgent navMeshAgent;
 
     private void Awake()
@@ -53,9 +53,8 @@ public class EnemyBehaviour : MonoBehaviour
         attackSpeed = newAttackSpeed;
     }
 
-    public void Start()
+    private void Start()
     {
-        
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
     }
@@ -121,9 +120,21 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    // Handle enemy death   
+    // Handle enemy death and apply rewards
     private void Die()
     {
+        // Generate random gold and exp rewards within defined range
+        int goldReward = Random.Range(enemyData.minGold, enemyData.maxGold + 1);
+        int expReward = Random.Range(enemyData.minExp, enemyData.maxExp + 1);
+
+        // Give rewards to the player
+        PlayerStats playerStats = FindObjectOfType<PlayerStats>();
+        if (playerStats != null)
+        {
+            playerStats.AddGold(goldReward);
+            playerStats.AddExperience(expReward);
+        }
+
         Destroy(gameObject); // Destroy enemy object on death
     }
 

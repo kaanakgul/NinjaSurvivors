@@ -12,4 +12,13 @@ using UnityEngine;
         public float speed;           // Speed of the enemy
         public float damage;          // Damage the enemy deals
         public float attackSpeed;     // How often the enemy attacks
-    }
+
+
+        // Reward ranges
+        public int minGold = 1;
+        public int maxGold = 5;
+        public int minExp = 10;
+        public int maxExp = 20;
+
+
+}

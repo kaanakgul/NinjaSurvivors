@@ -7,21 +7,25 @@ public class WeaponManager : MonoBehaviour
     public List<WeaponData> weaponDataList; // List to hold weapon data
     public Transform firePoint; // Where weapons (projectiles, etc.) will spawn from
     private Vector2 currentFireDirection = Vector2.right; // Default fire direction
-    private List<WeaponBehavior> activeWeapons = new List<WeaponBehavior>(); // List of currently active weapons
+    private List<WeaponBehavior> activeMeleeWeapons = new List<WeaponBehavior>(); // List of active melee weapons
 
     private void Start()
     {
-        // Initialize active weapons from weapon data
+        // Initialize melee weapons from weapon data, skipping projectiles
         foreach (var weaponData in weaponDataList)
         {
-            WeaponBehavior weapon = Instantiate(weaponData.prefab, transform).GetComponent<WeaponBehavior>();
-            weapon.damageAmount = weaponData.damageAmount;
-            weapon.cooldown = weaponData.cooldown;
-            weapon.isRanged = weaponData.isRanged;
-            activeWeapons.Add(weapon);
+            if (!weaponData.isRanged) // Only add melee weapons to activeMeleeWeapons
+            {
+                WeaponBehavior weapon = Instantiate(weaponData.prefab, transform).GetComponent<WeaponBehavior>();
+                weapon.damageAmount = weaponData.damageAmount;
+                weapon.cooldown = weaponData.cooldown;
+                weapon.isRanged = weaponData.isRanged;
+                activeMeleeWeapons.Add(weapon);
+            }
         }
 
-        StartCoroutine(FireWeapons()); // Start the firing loop for active weapons
+        StartCoroutine(FireWeapons()); // Start the firing loop for melee weapons
+        StartCoroutine(FireRangedWeapons()); // Start the firing loop for ranged weapons
     }
 
     // Sets the direction for firing ranged weapons
@@ -30,16 +34,16 @@ public class WeaponManager : MonoBehaviour
         currentFireDirection = direction; // Update firing direction
     }
 
-    // Automatically fire all active weapons
+    // Automatically fire all active melee weapons
     private IEnumerator FireWeapons()
     {
         while (true)
         {
-            foreach (WeaponBehavior weapon in activeWeapons)
+            foreach (WeaponBehavior weapon in activeMeleeWeapons)
             {
-                if (weapon.CanFire()) // Check if the weapon can fire
+                if (weapon != null && weapon.CanFire()) // Check if the weapon exists and can fire
                 {
-                    FireWeapon(weapon); // Fire the weapon
+                    FireMeleeWeapon(weapon); // Fire the melee weapon
                     weapon.ResetFireTime(); // Reset fire time after firing
                 }
             }
@@ -47,19 +51,40 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    // Fires a single weapon
-    private void FireWeapon(WeaponBehavior weapon)
+    // Automatically fire ranged weapons based on their cooldowns
+    private IEnumerator FireRangedWeapons()
     {
-        if (weapon.isRanged)
+        while (true)
         {
-            // Instantiate and fire ranged weapon projectiles
-            WeaponBehavior projectile = Instantiate(weapon.gameObject, firePoint.position, Quaternion.identity).GetComponent<WeaponBehavior>();
-            projectile.SetDirection(currentFireDirection); // Set direction for the projectile
+            foreach (var weaponData in weaponDataList)
+            {
+                if (weaponData.isRanged)
+                {
+                    FireRangedWeapon(weaponData);
+                    yield return new WaitForSeconds(weaponData.cooldown); // Wait for the weapon's cooldown before firing again
+                }
+            }
         }
-        else
+    }
+
+    // Fires a single melee weapon
+    private void FireMeleeWeapon(WeaponBehavior weapon)
+    {
+        StartCoroutine(weapon.HandleVisibility()); // Show melee weapon during the attack
+    }
+
+    // Fires a single ranged weapon
+    private void FireRangedWeapon(WeaponData weaponData)
+    {
+        GameObject projectile = Instantiate(weaponData.prefab, firePoint.position, Quaternion.identity);
+        WeaponBehavior projectileBehavior = projectile.GetComponent<WeaponBehavior>();
+
+        if (projectileBehavior != null)
         {
-            // Trigger melee weapon logic (like swinging or proximity checks)
-            StartCoroutine(weapon.HandleVisibility()); // Show melee weapon during the attack
+            projectileBehavior.SetDirection(currentFireDirection);
+            projectileBehavior.damageAmount = weaponData.damageAmount;
+            projectileBehavior.isRanged = true;
+            Destroy(projectile, 5f); // Destroy the projectile after 5 seconds
         }
     }
 }
