@@ -26,10 +26,12 @@ public class RestartManager : MonoBehaviour
         if (playerStats.IsDead)
         {
             ShowRestartPanel();
+            Time.timeScale = 0; // Pause the game
         }
         else
         {
             restartPanel.SetActive(false); // Hide the restart panel if the player is not dead
+            Time.timeScale = 1; // Ensure time scale is normal when not dead
         }
 
         // Listen for restart input
@@ -46,6 +48,7 @@ public class RestartManager : MonoBehaviour
 
     private void RestartGame()
     {
+        Time.timeScale = 1; // Reset time scale before restarting
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Reload the current scene
     }
 }

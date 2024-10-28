@@ -154,7 +154,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1873008398}
-  - {fileID: 607485931}
   m_Father: {fileID: 1962688399}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -542315,7 +542314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &607485931
 RectTransform:
   m_ObjectHideFlags: 0
@@ -542323,18 +542322,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 607485930}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -750.8334}
+  m_LocalScale: {x: 8.833334, y: 8.833334, z: 8.833334}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 554196235}
-  m_Father: {fileID: 96578596}
+  m_Father: {fileID: 1572104185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.051499844, y: -0.08980012}
-  m_SizeDelta: {x: 20.95, y: 14.8916}
+  m_AnchoredPosition: {x: 0.45489502, y: -0.7932434}
+  m_SizeDelta: {x: -246.60033, y: -139.10251}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &607485932
 MonoBehaviour:
@@ -688396,6 +688395,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 978760334}
+  - {fileID: 607485931}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -688947,6 +688947,7 @@ MonoBehaviour:
   gold: 0
   experience: 0
   healthSlider: {fileID: 1873008399}
+  goldExpText: {fileID: 978760335}
 --- !u!1 &1970616202
 GameObject:
   m_ObjectHideFlags: 0
@@ -689143,6 +689144,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
+  - {fileID: 1572104185}
   - {fileID: 1962688399}
   - {fileID: 986509518}
   - {fileID: 1219392348}
@@ -689151,5 +689153,4 @@ SceneRoots:
   - {fileID: 1575317378}
   - {fileID: 722787906}
   - {fileID: 1611193555}
-  - {fileID: 1572104185}
   - {fileID: 1095624596}
