@@ -1,59 +1,69 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-
+using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int gold = 0;           // Current gold
-    public int experience = 0;     // Current experience points
-    public int level = 0;          // Player's current level
-    private int experienceThreshold = 500;  // EXP needed to reach the next level
-    private const float levelIncrement = 1.1f;  // Increase threshold by 10% each level
+    public float maxHealth = 100.0f;
+    public float currentHealth;
+    public int gold = 0;
+    public int experience = 0;
 
-    public TextMeshProUGUI goldExpText; // Reference to the UI Text
+    public Slider healthSlider; // Reference to health bar UI
 
     private void Start()
     {
-        UpdateUI();
+        currentHealth = maxHealth;
+        UpdateHealthUI();
     }
 
+    // Method to take damage
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            Die();
+        }
+        UpdateHealthUI();
+    }
+
+    // Check if the player is dead
+    public bool IsDead()
+    {
+        return currentHealth <= 0;
+    }
+
+    // Method to handle player death
+    private void Die()
+    {
+        Debug.Log("Player is dead.");
+        // Add any additional death handling here, e.g., disable player controls
+        gameObject.SetActive(false); // Deactivate player on death
+    }
+
+    // Method to add gold
     public void AddGold(int amount)
     {
         gold += amount;
-        UpdateUI();
+        Debug.Log("Player gained " + amount + " gold. Total gold: " + gold);
     }
 
+    // Method to add experience
     public void AddExperience(int amount)
     {
         experience += amount;
-        CheckForLevelUp();
-        UpdateUI();
+        Debug.Log("Player gained " + amount + " experience. Total experience: " + experience);
+        // Handle leveling up here if necessary
     }
 
-    private void CheckForLevelUp()
+    // Method to update the health bar UI
+    private void UpdateHealthUI()
     {
-        while (experience >= experienceThreshold)
+        if (healthSlider != null)
         {
-            experience -= experienceThreshold;  // Deduct the threshold amount from EXP
-            LevelUp();  // Increase player level
-            experienceThreshold = Mathf.RoundToInt(experienceThreshold * (1 + levelIncrement)); // Increase threshold by 10%
-        }
-    }
-
-    private void LevelUp()
-    {
-        level++;  // Increment level
-        Debug.Log("Leveled up to level " + level + "! New EXP threshold: " + experienceThreshold);
-    }
-
-    // Method to update UI with current stats, including level, gold, and experience
-    private void UpdateUI()
-    {
-        if (goldExpText != null)
-        {
-            goldExpText.text = $"Gold: {gold}\nEXP: {experience}/{experienceThreshold}\nLevel: {level}";
+            healthSlider.value = currentHealth / maxHealth;
+            healthSlider.gameObject.SetActive(currentHealth < maxHealth); // Show only if health is not full
         }
     }
 }

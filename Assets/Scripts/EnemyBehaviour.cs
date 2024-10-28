@@ -90,17 +90,17 @@ public class EnemyBehaviour : MonoBehaviour
     private IEnumerator DealDamage(GameObject player)
     {
         Debug.Log("Starting to deal damage to player");
-        Charachter characterComponent = player.GetComponent<Charachter>();
+        PlayerStats playerStats = player.GetComponent<PlayerStats>();
 
-        // Make sure the player has a Charachter component and isn't dead
-        if (characterComponent != null && !characterComponent.isDead)
+        // Make sure the player has a PlayerStats component and isn't dead
+        if (playerStats != null && !playerStats.IsDead())
         {
-            while (!characterComponent.isDead)
+            while (!playerStats.IsDead())
             {
                 // Reduce player's health
-                characterComponent.health -= damage;
+                playerStats.TakeDamage(damage);
                 Debug.Log("Player takes " + damage + " damage.");
-                Debug.Log("Player has " + characterComponent.health + " health remaining.");
+                Debug.Log("Player has " + playerStats.currentHealth + " health remaining.");
 
                 // Wait for the attack speed duration
                 yield return new WaitForSeconds(attackSpeed);
