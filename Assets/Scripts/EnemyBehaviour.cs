@@ -93,9 +93,9 @@ public class EnemyBehaviour : MonoBehaviour
         PlayerStats playerStats = player.GetComponent<PlayerStats>();
 
         // Make sure the player has a PlayerStats component and isn't dead
-        if (playerStats != null && !playerStats.IsDead())
+        if (playerStats != null && !playerStats.IsDead)
         {
-            while (!playerStats.IsDead())
+            while (!playerStats.IsDead)
             {
                 // Reduce player's health
                 playerStats.TakeDamage(damage);

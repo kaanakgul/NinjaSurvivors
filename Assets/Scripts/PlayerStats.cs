@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro; // Include TextMeshPro namespace
 
 public class PlayerStats : MonoBehaviour
 {
@@ -9,11 +10,14 @@ public class PlayerStats : MonoBehaviour
     public int experience = 0;
 
     public Slider healthSlider; // Reference to health bar UI
+    public TMP_Text goldExpText; // Reference to the UI TextMeshPro component for gold and experience
+    public bool IsDead { get; private set; } = false; // Property for dead state
 
     private void Start()
     {
         currentHealth = maxHealth;
         UpdateHealthUI();
+        UpdateGoldExpText(); // Initialize the text display
     }
 
     // Method to take damage
@@ -28,17 +32,11 @@ public class PlayerStats : MonoBehaviour
         UpdateHealthUI();
     }
 
-    // Check if the player is dead
-    public bool IsDead()
-    {
-        return currentHealth <= 0;
-    }
-
     // Method to handle player death
     private void Die()
     {
+        IsDead = true; // Set the player as dead
         Debug.Log("Player is dead.");
-        // Add any additional death handling here, e.g., disable player controls
         gameObject.SetActive(false); // Deactivate player on death
     }
 
@@ -47,6 +45,7 @@ public class PlayerStats : MonoBehaviour
     {
         gold += amount;
         Debug.Log("Player gained " + amount + " gold. Total gold: " + gold);
+        UpdateGoldExpText(); // Update the UI whenever gold is added
     }
 
     // Method to add experience
@@ -54,7 +53,7 @@ public class PlayerStats : MonoBehaviour
     {
         experience += amount;
         Debug.Log("Player gained " + amount + " experience. Total experience: " + experience);
-        // Handle leveling up here if necessary
+        UpdateGoldExpText(); // Update the UI whenever experience is added
     }
 
     // Method to update the health bar UI
@@ -64,6 +63,19 @@ public class PlayerStats : MonoBehaviour
         {
             healthSlider.value = currentHealth / maxHealth;
             healthSlider.gameObject.SetActive(currentHealth < maxHealth); // Show only if health is not full
+        }
+    }
+
+    // Method to update the gold and experience text UI
+    public void UpdateGoldExpText()
+    {
+        if (goldExpText != null) // Ensure this is assigned in the inspector
+        {
+            goldExpText.text = $"Gold: {gold}\nEXP: {experience}";
+        }
+        else
+        {
+            Debug.LogWarning("Gold/EXP TextMeshPro object is not assigned!");
         }
     }
 }
