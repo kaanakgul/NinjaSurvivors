@@ -16,3 +16,4 @@ MonoBehaviour:
   damageAmount: 150
   cooldown: 1
   isRanged: 1
+  Speed: 5

@@ -100,7 +100,7 @@ public class WeaponManager : MonoBehaviour
                 if (projectileBehavior != null)
                 {
                     projectileBehavior.SetDirection(direction);
-                    projectileBehavior.speed = shurikenSpeed; // Set speed
+                    projectileBehavior.weaponData.Speed = shurikenSpeed; // Set speed
                     projectileBehavior.damageAmount = shurikenDamage; // Set damage
                     projectileBehavior.isRanged = true;
                     Destroy(projectile, 5f); // Destroy the projectile after 5 seconds

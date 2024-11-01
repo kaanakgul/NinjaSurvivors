@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class WeaponBehavior : MonoBehaviour
 {
-    public float speed = 10f; // Speed of the projectile (if applicable)
+    //public float speed = 10f; // Speed of the projectile (if applicable)
     private Vector2 direction; // Direction the weapon will travel (for ranged)
     public float rotationSpeed = 360f; // Speed of rotation in degrees per second
     public bool isRanged; // Indicates if the weapon is ranged
     public float damageAmount = 50f; // Damage dealt by the weapon
     public float cooldown = 0.5f; // Cooldown duration for this weapon
     private float lastFireTime; // Last time this weapon was fired
+    public WeaponData weaponData;
+
+    Rigidbody2D rb;
 
     private void Awake()
     {
@@ -24,6 +27,8 @@ public class WeaponBehavior : MonoBehaviour
         {
             Destroy(gameObject, 5f); // Destroy ranged weapon after 5 seconds
         }
+
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Method to set the direction of the weapon (for ranged)
@@ -49,10 +54,9 @@ public class WeaponBehavior : MonoBehaviour
         // Move the projectile in the set direction (only for ranged)
         if (isRanged && direction != Vector2.zero)
         {
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.velocity = direction * speed; // Apply velocity
+                rb.velocity = direction * weaponData.Speed; // Apply velocity
                 transform.Rotate(0, 0, -rotationSpeed * Time.fixedDeltaTime); // Rotate
             }
         }
