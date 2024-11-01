@@ -689298,12 +689298,13 @@ MonoBehaviour:
   currentHealth: 0
   gold: 0
   experience: 0
-  level: 0
+  level: 1
   healthSlider: {fileID: 1873008399}
   expSlider: {fileID: 2010843626}
   goldExpText: {fileID: 978760335}
   levelText: {fileID: 505601260}
   regenRate: 1
+  weaponManager: {fileID: 0}
 --- !u!1 &1970616202
 GameObject:
   m_ObjectHideFlags: 0
@@ -689470,16 +689471,15 @@ MonoBehaviour:
     minExp: 10
     maxExp: 20
   player: {fileID: 1962688399}
-  spawnRadius: 5
   initialSpawnRate: 2
   maxEnemies: 10000
-  maxX: 111
-  minY: -111
-  maxY: 111
-  minX: -111
+  backgroundTilemap: {fileID: 600884065}
+  recycleDistanceThreshold: 100
   timeBeforeScaling: 30
   scalingRate: 0.95
   minSpawnRate: 0.5
+  spawnRadiusFromCamera: 1
+  spawnBuffer: 0.5
 --- !u!4 &1970616204
 Transform:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class PlayerStats : MonoBehaviour
     public float currentHealth;
     public int gold = 0;
     public int experience = 0;
-    public int level = 0;
+    public int level = 1; // Start at level 1
     private int experienceThreshold = 100; // Initial EXP needed for the next level
 
     public Slider healthSlider; // Reference to health bar UI
@@ -19,6 +19,7 @@ public class PlayerStats : MonoBehaviour
     public bool IsDead { get; private set; } = false; // Property for dead state
 
     public float regenRate = 0.1f; // Health per second for regeneration
+    public WeaponManager weaponManager; // Reference to WeaponManager for shuriken upgrades
 
     private void Start()
     {
@@ -26,7 +27,7 @@ public class PlayerStats : MonoBehaviour
         UpdateHealthUI();
         UpdateGoldExpText();
         UpdateExpBar();
-        UpdateLevelText();
+        UpdateLevelText(); // Update level text at the start to reflect correct level
         StartCoroutine(HealthRegenCoroutine());
     }
 
@@ -80,7 +81,13 @@ public class PlayerStats : MonoBehaviour
         experienceThreshold = Mathf.RoundToInt(experienceThreshold * 1.1f); // Increase threshold for next level
         Debug.Log("Leveled up! New level: " + level);
         UpdateExpBar();
-        UpdateLevelText(); // Update the level display
+        UpdateLevelText(); // Update level text after leveling up
+
+        // Upgrade weapons at certain levels
+        if (weaponManager != null)
+        {
+            weaponManager.UpgradeShuriken(level);
+        }
     }
 
     // Method to update the EXP bar UI
