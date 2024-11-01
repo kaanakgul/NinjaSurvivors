@@ -117,10 +117,6 @@ public class WeaponManager : MonoBehaviour
 
         if (level >= 2 && level <= 8)
         {
-            // Increase shuriken speed and damage slightly for each level
-            shurikenSpeed += 1f;
-            shurikenDamage += 10f;
-
             // Add new shurikens every level up to level 8
             shurikenCount = Mathf.Min(level, 8); // Ensure the maximum count is 8
 

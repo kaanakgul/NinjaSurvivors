@@ -126,6 +126,8 @@ public class EnemyBehaviour : MonoBehaviour
         // Generate random gold and exp rewards within defined range
         int goldReward = Random.Range(enemyData.minGold, enemyData.maxGold + 1);
         int expReward = Random.Range(enemyData.minExp, enemyData.maxExp + 1);
+        FindObjectOfType<PlayerStats>().IncrementKillCount();
+
 
         // Give rewards to the player
         PlayerStats playerStats = FindObjectOfType<PlayerStats>();
