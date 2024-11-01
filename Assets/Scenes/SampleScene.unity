@@ -542730,7 +542730,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -2.0000005, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &827169177
 MonoBehaviour:
@@ -688966,8 +688966,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -2, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1873008397
 GameObject:
@@ -689304,7 +689304,7 @@ MonoBehaviour:
   goldExpText: {fileID: 978760335}
   levelText: {fileID: 505601260}
   regenRate: 1
-  weaponManager: {fileID: 0}
+  weaponManager: {fileID: 722787905}
 --- !u!1 &1970616202
 GameObject:
   m_ObjectHideFlags: 0
@@ -689476,7 +689476,7 @@ MonoBehaviour:
   backgroundTilemap: {fileID: 600884065}
   recycleDistanceThreshold: 100
   timeBeforeScaling: 30
-  scalingRate: 0.95
+  scalingRate: 0.5
   minSpawnRate: 0.5
   spawnRadiusFromCamera: 1
   spawnBuffer: 0.5
