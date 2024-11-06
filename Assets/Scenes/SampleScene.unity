@@ -689474,101 +689474,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTypes:
-  - prefab: {fileID: 2230099778332331954, guid: 8a51734b902bd034293cec14def4b150, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 1149394497410173200, guid: b327e1526dd8daf4b8808bfc4346cea5, type: 3}
-    health: 50
-    speed: 5
-    damage: 5
-    attackSpeed: 0.3
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 5769744676959606751, guid: e107c9e1542b64ed1b18715e9901c6fd, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 2169894618667897136, guid: eeedf2d029d764e82b1d5f1a150f2817, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
   - prefab: {fileID: 6195579143891750045, guid: edd98d813521e9e448be00130d7e485f, type: 3}
     health: 100
     speed: 2
     damage: 20
     attackSpeed: 0.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 1722810089205639537, guid: abf1cb01a14b1432b8c029c23737298d, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 8643971284284950943, guid: 4568457c3e5ec41298db0c41ab990610, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 7278465254814068108, guid: 612bf42dceaf843b5adbc824d85b4195, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 442872404851066976, guid: eb307ca1069434de0838e0ed854cd58e, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 3442728749327809765, guid: 1158af8effaf349f38c9abf72762a9d5, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 4219902254358749389, guid: f02ed377a845f42158f329664671c19d, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
     minGold: 1
     maxGold: 5
     minExp: 10
@@ -689582,7 +689492,16 @@ MonoBehaviour:
     maxGold: 5
     minExp: 10
     maxExp: 20
-  - prefab: {fileID: 2822214596396074735, guid: e3747883408414df384ed2e0702d8808, type: 3}
+  - prefab: {fileID: 1149394497410173200, guid: b327e1526dd8daf4b8808bfc4346cea5, type: 3}
+    health: 50
+    speed: 5
+    damage: 5
+    attackSpeed: 0.3
+    minGold: 1
+    maxGold: 5
+    minExp: 10
+    maxExp: 20
+  - prefab: {fileID: 2230099778332331954, guid: 8a51734b902bd034293cec14def4b150, type: 3}
     health: 200
     speed: 1
     damage: 15
@@ -689600,7 +689519,88 @@ MonoBehaviour:
     maxGold: 5
     minExp: 10
     maxExp: 20
+  - prefab: {fileID: 2169894618667897136, guid: eeedf2d029d764e82b1d5f1a150f2817, type: 3}
+    health: 200
+    speed: 1
+    damage: 15
+    attackSpeed: 1.5
+    minGold: 1
+    maxGold: 5
+    minExp: 10
+    maxExp: 20
+  - prefab: {fileID: 8643971284284950943, guid: 4568457c3e5ec41298db0c41ab990610, type: 3}
+    health: 200
+    speed: 1
+    damage: 15
+    attackSpeed: 1.5
+    minGold: 1
+    maxGold: 5
+    minExp: 10
+    maxExp: 20
+  - prefab: {fileID: 1722810089205639537, guid: abf1cb01a14b1432b8c029c23737298d, type: 3}
+    health: 200
+    speed: 1
+    damage: 15
+    attackSpeed: 1.5
+    minGold: 1
+    maxGold: 5
+    minExp: 10
+    maxExp: 20
+  - prefab: {fileID: 2822214596396074735, guid: e3747883408414df384ed2e0702d8808, type: 3}
+    health: 200
+    speed: 1
+    damage: 15
+    attackSpeed: 1.5
+    minGold: 1
+    maxGold: 5
+    minExp: 10
+    maxExp: 20
+  - prefab: {fileID: 442872404851066976, guid: eb307ca1069434de0838e0ed854cd58e, type: 3}
+    health: 200
+    speed: 1
+    damage: 15
+    attackSpeed: 1.5
+    minGold: 1
+    maxGold: 5
+    minExp: 10
+    maxExp: 20
+  - prefab: {fileID: 5769744676959606751, guid: e107c9e1542b64ed1b18715e9901c6fd, type: 3}
+    health: 200
+    speed: 1
+    damage: 15
+    attackSpeed: 1.5
+    minGold: 1
+    maxGold: 5
+    minExp: 10
+    maxExp: 20
+  - prefab: {fileID: 4219902254358749389, guid: f02ed377a845f42158f329664671c19d, type: 3}
+    health: 200
+    speed: 1
+    damage: 15
+    attackSpeed: 1.5
+    minGold: 1
+    maxGold: 5
+    minExp: 10
+    maxExp: 20
+  - prefab: {fileID: 3442728749327809765, guid: 1158af8effaf349f38c9abf72762a9d5, type: 3}
+    health: 200
+    speed: 1
+    damage: 15
+    attackSpeed: 1.5
+    minGold: 1
+    maxGold: 5
+    minExp: 10
+    maxExp: 20
   - prefab: {fileID: 5734037537018629841, guid: b1a8b7839b9774c0cad58cade0ca80c1, type: 3}
+    health: 200
+    speed: 1
+    damage: 15
+    attackSpeed: 1.5
+    minGold: 1
+    maxGold: 5
+    minExp: 10
+    maxExp: 20
+  - prefab: {fileID: 7278465254814068108, guid: 612bf42dceaf843b5adbc824d85b4195, type: 3}
     health: 200
     speed: 1
     damage: 15
