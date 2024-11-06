@@ -689474,20 +689474,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTypes:
-  - prefab: {fileID: 6195579143891750045, guid: edd98d813521e9e448be00130d7e485f, type: 3}
-    health: 100
-    speed: 2
-    damage: 20
-    attackSpeed: 0.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 834255288876157338, guid: 1f262a5770c484487b99304b3defab76, type: 3}
-    health: 100
-    speed: 3
-    damage: 12
-    attackSpeed: 0.4
+  - prefab: {fileID: 2230099778332331954, guid: 8a51734b902bd034293cec14def4b150, type: 3}
+    health: 200
+    speed: 1
+    damage: 15
+    attackSpeed: 1.5
     minGold: 1
     maxGold: 5
     minExp: 10
@@ -689501,16 +689492,7 @@ MonoBehaviour:
     maxGold: 5
     minExp: 10
     maxExp: 20
-  - prefab: {fileID: 2230099778332331954, guid: 8a51734b902bd034293cec14def4b150, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 1543395542522328332, guid: 2a933824ae4af4200af31c75fef87686, type: 3}
+  - prefab: {fileID: 5769744676959606751, guid: e107c9e1542b64ed1b18715e9901c6fd, type: 3}
     health: 200
     speed: 1
     damage: 15
@@ -689528,11 +689510,11 @@ MonoBehaviour:
     maxGold: 5
     minExp: 10
     maxExp: 20
-  - prefab: {fileID: 8643971284284950943, guid: 4568457c3e5ec41298db0c41ab990610, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
+  - prefab: {fileID: 6195579143891750045, guid: edd98d813521e9e448be00130d7e485f, type: 3}
+    health: 100
+    speed: 2
+    damage: 20
+    attackSpeed: 0.5
     minGold: 1
     maxGold: 5
     minExp: 10
@@ -689546,7 +689528,16 @@ MonoBehaviour:
     maxGold: 5
     minExp: 10
     maxExp: 20
-  - prefab: {fileID: 2822214596396074735, guid: e3747883408414df384ed2e0702d8808, type: 3}
+  - prefab: {fileID: 8643971284284950943, guid: 4568457c3e5ec41298db0c41ab990610, type: 3}
+    health: 200
+    speed: 1
+    damage: 15
+    attackSpeed: 1.5
+    minGold: 1
+    maxGold: 5
+    minExp: 10
+    maxExp: 20
+  - prefab: {fileID: 7278465254814068108, guid: 612bf42dceaf843b5adbc824d85b4195, type: 3}
     health: 200
     speed: 1
     damage: 15
@@ -689564,7 +689555,7 @@ MonoBehaviour:
     maxGold: 5
     minExp: 10
     maxExp: 20
-  - prefab: {fileID: 5769744676959606751, guid: e107c9e1542b64ed1b18715e9901c6fd, type: 3}
+  - prefab: {fileID: 3442728749327809765, guid: 1158af8effaf349f38c9abf72762a9d5, type: 3}
     health: 200
     speed: 1
     damage: 15
@@ -689582,7 +689573,25 @@ MonoBehaviour:
     maxGold: 5
     minExp: 10
     maxExp: 20
-  - prefab: {fileID: 3442728749327809765, guid: 1158af8effaf349f38c9abf72762a9d5, type: 3}
+  - prefab: {fileID: 834255288876157338, guid: 1f262a5770c484487b99304b3defab76, type: 3}
+    health: 100
+    speed: 3
+    damage: 12
+    attackSpeed: 0.4
+    minGold: 1
+    maxGold: 5
+    minExp: 10
+    maxExp: 20
+  - prefab: {fileID: 2822214596396074735, guid: e3747883408414df384ed2e0702d8808, type: 3}
+    health: 200
+    speed: 1
+    damage: 15
+    attackSpeed: 1.5
+    minGold: 1
+    maxGold: 5
+    minExp: 10
+    maxExp: 20
+  - prefab: {fileID: 1543395542522328332, guid: 2a933824ae4af4200af31c75fef87686, type: 3}
     health: 200
     speed: 1
     damage: 15
@@ -689592,15 +689601,6 @@ MonoBehaviour:
     minExp: 10
     maxExp: 20
   - prefab: {fileID: 5734037537018629841, guid: b1a8b7839b9774c0cad58cade0ca80c1, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 7278465254814068108, guid: 612bf42dceaf843b5adbc824d85b4195, type: 3}
     health: 200
     speed: 1
     damage: 15
@@ -689669,7 +689669,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 9.920013}
+  m_AnchoredPosition: {x: 0, y: 9.920044}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2010843626
@@ -689893,63 +689893,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2101244800}
   m_CullTransparentMesh: 1
---- !u!1001 &8197466583452906263
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 497965940407203483, guid: faebd75f563829c418bdf067f130ffcb, type: 3}
-      propertyPath: m_Name
-      value: Axe
-      objectReference: {fileID: 0}
-    - target: {fileID: 548624765136048254, guid: faebd75f563829c418bdf067f130ffcb, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 548624765136048254, guid: faebd75f563829c418bdf067f130ffcb, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 548624765136048254, guid: faebd75f563829c418bdf067f130ffcb, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 548624765136048254, guid: faebd75f563829c418bdf067f130ffcb, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 548624765136048254, guid: faebd75f563829c418bdf067f130ffcb, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 548624765136048254, guid: faebd75f563829c418bdf067f130ffcb, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 548624765136048254, guid: faebd75f563829c418bdf067f130ffcb, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 548624765136048254, guid: faebd75f563829c418bdf067f130ffcb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 548624765136048254, guid: faebd75f563829c418bdf067f130ffcb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 548624765136048254, guid: faebd75f563829c418bdf067f130ffcb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: faebd75f563829c418bdf067f130ffcb, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -689965,4 +689908,3 @@ SceneRoots:
   - {fileID: 722787906}
   - {fileID: 1611193555}
   - {fileID: 1095624596}
-  - {fileID: 8197466583452906263}
