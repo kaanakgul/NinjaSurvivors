@@ -171,8 +171,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 784b901c8ad6a7d45a228484ef130cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  rotationSpeed: 360
-  isRanged: 0
-  damageAmount: 50
-  cooldown: 0.5
+  weaponData: {fileID: 11400000, guid: 7f7c44febb52949ce88f974ea465921c, type: 2}

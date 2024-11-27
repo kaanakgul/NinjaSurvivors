@@ -60,8 +60,12 @@ public class EnemySpawner : MonoBehaviour
                     GameObject enemy = Instantiate(enemyToSpawn.prefab, hit.position, Quaternion.identity);
                     spawnedEnemies.Add(enemy);
 
-                    enemy.GetComponent<EnemyBehaviour>().SetTarget(player);
-                    enemy.GetComponent<EnemyBehaviour>().SetStats(enemyToSpawn.health, enemyToSpawn.speed, enemyToSpawn.damage, enemyToSpawn.attackSpeed);
+                    EnemyBehaviour enemyBehaviour = enemy.GetComponent<EnemyBehaviour>();
+                    if (enemyBehaviour != null)
+                    {
+                        enemyBehaviour.SetEnemyData(enemyToSpawn);
+                        enemyBehaviour.SetTarget(player);
+                    }
                 }
                 else
                 {

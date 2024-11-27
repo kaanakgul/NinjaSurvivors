@@ -4,123 +4,146 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    public List<WeaponData> weaponDataList; // List to hold weapon data
-    public Transform firePoint; // Where weapons (projectiles, etc.) will spawn from
+    public static WeaponManager Instance { get; private set; } // Singleton instance
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this; // Assign the instance
+        }
+        else
+        {
+            Destroy(gameObject); // Destroy duplicate instances
+        }
+    }
+
+    public List<WeaponData> weaponDataList; // List of all available weapons
+    public Transform firePoint; // Spawn point for ranged projectiles
     private Vector2 currentFireDirection = Vector2.right; // Default fire direction
-    private List<WeaponBehavior> activeMeleeWeapons = new List<WeaponBehavior>(); // List of active melee weapons
-    private int shurikenCount = 1; // Number of shurikens to fire for ranged weapon
-    private float shurikenSpeed = 10f;
-    private float shurikenDamage = 50f;
+
+    private Dictionary<string, int> weaponLevels = new Dictionary<string, int>();
+    private Dictionary<string, WeaponBehavior> activeWeapons = new Dictionary<string, WeaponBehavior>();
 
     private void Start()
     {
-        // Initialize melee weapons from weapon data, skipping projectiles
+        // Initialize weapon levels
         foreach (var weaponData in weaponDataList)
         {
-            if (!weaponData.isRanged) // Only add melee weapons to activeMeleeWeapons
+            if (weaponData.weaponName == "Shuriken")
             {
-                WeaponBehavior weapon = Instantiate(weaponData.prefab, transform).GetComponent<WeaponBehavior>();
-                weapon.damageAmount = weaponData.damageAmount;
-                weapon.cooldown = weaponData.cooldown;
-                weapon.isRanged = weaponData.isRanged;
-                activeMeleeWeapons.Add(weapon);
+                weaponLevels[weaponData.weaponName] = 1; // Start with level 1 Shuriken
+                ActivateWeapon(weaponData);
+            }
+            else
+            {
+                weaponLevels[weaponData.weaponName] = 0;
             }
         }
 
-        StartCoroutine(FireWeapons()); // Start the firing loop for melee weapons
-        StartCoroutine(FireRangedWeapons()); // Start the firing loop for ranged weapons
+        StartCoroutine(FireWeapons());
+        StartCoroutine(FireRangedWeapons());
     }
 
-    // Sets the direction for firing ranged weapons
+    // Activate a weapon (called on level-up or when purchased)
+    private void ActivateWeapon(WeaponData weaponData)
+    {
+        if (!activeWeapons.ContainsKey(weaponData.weaponName))
+        {
+            var weapon = Instantiate(weaponData.prefab, transform).GetComponent<WeaponBehavior>();
+            weapon.weaponData = weaponData;
+            activeWeapons[weaponData.weaponName] = weapon;
+        }
+    }
+
+    public void UpgradeWeapon(string weaponName)
+    {
+        if (!weaponLevels.ContainsKey(weaponName)) return;
+
+        int currentLevel = weaponLevels[weaponName];
+        if (currentLevel >= 8)
+        {
+            Debug.Log($"{weaponName} is already at max level!");
+            return;
+        }
+
+        weaponLevels[weaponName]++;
+        int newLevel = weaponLevels[weaponName];
+        Debug.Log($"{weaponName} upgraded to Level {newLevel}.");
+
+        if (currentLevel == 0)
+        {
+            var weaponData = weaponDataList.Find(w => w.weaponName == weaponName);
+            if (weaponData != null) ActivateWeapon(weaponData);
+        }
+
+        if (activeWeapons.ContainsKey(weaponName))
+        {
+            activeWeapons[weaponName].LevelUp(newLevel);
+        }
+    }
+
+    public int GetWeaponLevel(string weaponName)
+    {
+        return weaponLevels.ContainsKey(weaponName) ? weaponLevels[weaponName] : 0;
+    }
+
     public void SetFireDirection(Vector2 direction)
     {
-        currentFireDirection = direction; // Update firing direction
+        currentFireDirection = direction;
     }
 
-    // Automatically fire all active melee weapons
     private IEnumerator FireWeapons()
     {
         while (true)
         {
-            foreach (WeaponBehavior weapon in activeMeleeWeapons)
+            foreach (var weapon in activeWeapons.Values)
             {
-                if (weapon != null && weapon.CanFire()) // Check if the weapon exists and can fire
+                if (!weapon.weaponData.isRanged && weapon.CanFire())
                 {
-                    FireMeleeWeapon(weapon); // Fire the melee weapon
-                    weapon.ResetFireTime(); // Reset fire time after firing
+                    StartCoroutine(weapon.HandleVisibility());
+                    weapon.ResetFireTime();
                 }
             }
-            yield return null; // Wait for the next frame (can adjust timing here)
+            yield return null;
         }
     }
 
-    // Automatically fire ranged weapons based on their cooldowns
     private IEnumerator FireRangedWeapons()
     {
         while (true)
         {
-            foreach (var weaponData in weaponDataList)
+            foreach (var weapon in activeWeapons.Values)
             {
-                if (weaponData.isRanged)
+                if (weapon.weaponData.isRanged && weapon.CanFire())
                 {
-                    FireRangedWeapon(weaponData);
-                    yield return new WaitForSeconds(weaponData.cooldown); // Wait for the weapon's cooldown before firing again
+                    FireRangedWeapon(weapon.weaponData, weaponLevels[weapon.weaponData.weaponName]);
+                    weapon.ResetFireTime();
                 }
             }
+            yield return null;
         }
     }
 
-    // Fires a single melee weapon
-    private void FireMeleeWeapon(WeaponBehavior weapon)
+    private void FireRangedWeapon(WeaponData weaponData, int level)
     {
-        StartCoroutine(weapon.HandleVisibility()); // Show melee weapon during the attack
-    }
+        int projectileCount = Mathf.Min(level, 8);
+        float angleStep = 360f / projectileCount;
+        float startAngle = Vector2.SignedAngle(Vector2.right, currentFireDirection);
 
-    private void FireRangedWeapon(WeaponData weaponData)
-    {
-        if (weaponData.isRanged)
+        for (int i = 0; i < projectileCount; i++)
         {
-            Debug.Log($"Firing {shurikenCount} shurikens."); // Debug log to verify shuriken count
+            float angle = startAngle + (angleStep * i);
+            Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
 
-            // Calculate the angle step based on the number of shurikens to ensure they are evenly spread
-            float angleStep = 360f / shurikenCount;
+            var projectile = Instantiate(weaponData.prefab, firePoint.position, Quaternion.identity);
+            var behavior = projectile.GetComponent<WeaponBehavior>();
 
-            // Start from a base angle, which we'll adjust as we add more shurikens
-            float startAngle = Vector2.SignedAngle(Vector2.right, currentFireDirection);
-
-            for (int i = 0; i < shurikenCount; i++)
+            if (behavior != null)
             {
-                float angle = startAngle + (angleStep * i); // Calculate the angle for this shuriken
-                Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)); // Calculate the direction
-
-                // Instantiate the shuriken and set its properties
-                GameObject projectile = Instantiate(weaponData.prefab, firePoint.position, Quaternion.identity);
-                WeaponBehavior projectileBehavior = projectile.GetComponent<WeaponBehavior>();
-
-                if (projectileBehavior != null)
-                {
-                    projectileBehavior.SetDirection(direction);
-                    projectileBehavior.weaponData.Speed = shurikenSpeed; // Set speed
-                    projectileBehavior.damageAmount = shurikenDamage; // Set damage
-                    projectileBehavior.isRanged = true;
-                    Destroy(projectile, 5f); // Destroy the projectile after 5 seconds
-                }
+                behavior.SetDirection(direction);
+                Destroy(projectile, 5f);
             }
-        }
-    }
-
-
-    // Upgrade the weapons based on the player level
-    public void UpgradeShuriken(int level)
-    {
-        Debug.Log($"Upgrading shurikens for level: {level}"); // Debug log to verify level
-
-        if (level >= 2 && level <= 8)
-        {
-            // Add new shurikens every level up to level 8
-            shurikenCount = Mathf.Min(level, 8); // Ensure the maximum count is 8
-
-            Debug.Log($"Shuriken count upgraded to: {shurikenCount}");
         }
     }
 }

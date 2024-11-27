@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4432018018565680793}
   - component: {fileID: 4570832832365550771}
   - component: {fileID: -7648330684253393367}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PandaEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -216,10 +216,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d1b35649237e224f8916cd97a6e29ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetDestination: {fileID: 0}
-  speed: 0
-  damage: 0
-  attackSpeed: 0.5
-  health: 100
   animator: {fileID: 0}
-  navMeshAgent: {fileID: 0}
+  enemyData:
+    prefab: {fileID: 0}
+    health: 0
+    speed: 0
+    damage: 0
+    attackSpeed: 0
+    minGold: 1
+    maxGold: 5
+    minExp: 10
+    maxExp: 20

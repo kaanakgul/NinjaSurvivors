@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8cff00bbee911c41aefb0f0f8a19d66, type: 3}
   m_Name: Katana
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  damageAmount: 50
-  cooldown: 0.5
+  weaponName: Katana
+  prefab: {fileID: 6283494592960308031, guid: 8cd197c2ca7a24e04a956ed6db9e1ef9, type: 3}
+  damageAmount: 500
+  cooldown: 4
   isRanged: 0
+  Speed: 5
+  rotationSpeed: 360

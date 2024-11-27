@@ -1,98 +1,110 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponBehavior : MonoBehaviour
 {
-    //public float speed = 10f; // Speed of the projectile (if applicable)
-    private Vector2 direction; // Direction the weapon will travel (for ranged)
-    public float rotationSpeed = 360f; // Speed of rotation in degrees per second
-    public bool isRanged; // Indicates if the weapon is ranged
-    public float damageAmount = 50f; // Damage dealt by the weapon
-    public float cooldown = 0.5f; // Cooldown duration for this weapon
-    private float lastFireTime; // Last time this weapon was fired
-    public WeaponData weaponData;
-
-    Rigidbody2D rb;
+    public WeaponData weaponData; // Reference to weapon data for stats
+    private Vector2 direction; // Direction for ranged weapons
+    private Rigidbody2D rb; // Rigidbody for ranged weapons
+    private float lastFireTime; // Time tracking for cooldowns
+    private int currentLevel = 1; // Current weapon level
 
     private void Awake()
     {
-        // Initialize any required components here
+        rb = GetComponent<Rigidbody2D>(); // Initialize Rigidbody
     }
 
     private void Start()
     {
-        lastFireTime = Time.time; // Initialize the last fire time
-        if (isRanged)
+        lastFireTime = Time.time;
+        if (weaponData.isRanged)
         {
-            Destroy(gameObject, 5f); // Destroy ranged weapon after 5 seconds
+            Destroy(gameObject, 5f); // Destroy ranged projectiles after 5 seconds
         }
-
-        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Method to set the direction of the weapon (for ranged)
+    // Set the direction for ranged weapons
     public void SetDirection(Vector2 dir)
     {
-        direction = dir.normalized; // Normalize the direction
+        direction = dir.normalized;
     }
 
-    // Check if the weapon can be fired
+    // Check if the weapon can fire based on its cooldown
     public bool CanFire()
     {
-        return Time.time >= lastFireTime + cooldown; // Check if enough time has passed
+        return Time.time >= lastFireTime + weaponData.cooldown;
     }
 
-    // Reset the last fire time when the weapon is fired
+    // Reset fire cooldown after firing
     public void ResetFireTime()
     {
-        lastFireTime = Time.time; // Update last fire time
+        lastFireTime = Time.time;
     }
 
     private void FixedUpdate()
     {
-        // Move the projectile in the set direction (only for ranged)
-        if (isRanged && direction != Vector2.zero)
+        if (weaponData.isRanged && direction != Vector2.zero)
         {
-            if (rb != null)
-            {
-                rb.velocity = direction * weaponData.Speed; // Apply velocity
-                transform.Rotate(0, 0, -rotationSpeed * Time.fixedDeltaTime); // Rotate
-            }
+            rb.velocity = direction * weaponData.Speed; // Set velocity
+            transform.Rotate(0, 0, -weaponData.rotationSpeed * Time.fixedDeltaTime); // Rotate projectile
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Check if the collision is with an enemy
         if (collision.CompareTag("Enemy"))
         {
-            // Call the doDamage function to apply damage to the enemy
             DoDamage(collision);
 
-            // Destroy the weapon after hitting the enemy (only for ranged)
-            if (isRanged)
+            if (weaponData.isRanged)
             {
                 Destroy(gameObject);
             }
         }
     }
 
-    // Method to deal damage to the enemy
+    // Deal damage to enemies
     private void DoDamage(Collider2D enemy)
     {
-        EnemyBehaviour enemyBehaviour = enemy.GetComponent<EnemyBehaviour>();
+        var enemyBehaviour = enemy.GetComponent<EnemyBehaviour>();
         if (enemyBehaviour != null)
         {
-            enemyBehaviour.TakeDamage(damageAmount); // Apply damage
+            enemyBehaviour.TakeDamage(weaponData.damageAmount);
         }
     }
 
-    // Optional: Handle visibility for melee weapons
+    // Handle visibility for melee weapons
     public IEnumerator HandleVisibility()
     {
-        // Logic to show the weapon (animation, etc.)
-        // Example: Set the weapon's active state or visibility
-        yield return null; // Add your visibility logic here
+        Debug.Log($"Handling visibility for {weaponData.weaponName}");
+
+        gameObject.SetActive(true); // Enable visibility
+        yield return new WaitForSeconds(0.5f); // Adjust duration as needed
+        gameObject.SetActive(false); // Hide after attack
+    }
+
+    // Handle weapon level-ups dynamically
+    public void LevelUp(int newLevel)
+    {
+        if (newLevel <= currentLevel || newLevel > 8) return; // Validate level
+
+        Debug.Log($"{weaponData.weaponName} leveled up to {newLevel}!");
+
+        currentLevel = newLevel;
+
+        // Adjust weapon stats based on the level
+        weaponData.damageAmount += 5f * (newLevel - 1);
+        weaponData.cooldown *= 0.9f;
+
+        if (weaponData.isRanged)
+        {
+            weaponData.Speed += 1f * (newLevel - 1);
+        }
+    }
+
+    // Get the current level of the weapon
+    public int GetCurrentLevel()
+    {
+        return currentLevel;
     }
 }

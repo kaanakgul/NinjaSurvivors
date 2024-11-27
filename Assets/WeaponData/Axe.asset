@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8cff00bbee911c41aefb0f0f8a19d66, type: 3}
   m_Name: Axe
   m_EditorClassIdentifier: 
+  weaponName: Axe
   prefab: {fileID: 497965940407203483, guid: faebd75f563829c418bdf067f130ffcb, type: 3}
   damageAmount: 150
   cooldown: 1
   isRanged: 1
   Speed: 5
+  rotationSpeed: 360

@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8cff00bbee911c41aefb0f0f8a19d66, type: 3}
   m_Name: Shuriken
   m_EditorClassIdentifier: 
+  weaponName: Shuriken
   prefab: {fileID: 2876336612954471860, guid: c3077d763008e1a4b831867aa2dded63, type: 3}
   damageAmount: 50
   cooldown: 0.5
   isRanged: 1
+  Speed: 10
+  rotationSpeed: 360

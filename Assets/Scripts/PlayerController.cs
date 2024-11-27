@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     public Animator animator;
 
-    public Transform up, down, right, left;
+    //public Transform up, down, right, left;
 
     enum Direction { Left, Right, Up, Down, LeftDown, LeftUp, RightDown, RightUp };
 
@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
 
     bool IsObstacleAhaed(Direction dir)
     {
-        Transform check = up;
+       // Transform check = up;
 
         Vector3 vec;
 
