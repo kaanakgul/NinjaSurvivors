@@ -170,7 +170,8 @@ public class WeaponManager : MonoBehaviour
 
             if (behavior != null)
             {
-                behavior.SetDirection(direction);
+                float playerSpeed = PlayerStats.Instance.moveSpeed;
+                behavior.SetDirection(direction, playerSpeed); // Pass player's speed
                 Destroy(projectile, 10f);
             }
         }

@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Apply movement with speed
-        transform.position += movement * speed * Time.deltaTime;
+        transform.position += speed * Time.deltaTime * movement;
     }
 
     private void ChangeAnimation(string animationName)

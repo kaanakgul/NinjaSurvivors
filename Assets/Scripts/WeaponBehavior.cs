@@ -29,10 +29,10 @@ public class WeaponBehavior : MonoBehaviour
     }
 
     // Set the direction for ranged weapons
-    public void SetDirection(Vector2 dir)
+    public void SetDirection(Vector2 dir, float playerSpeed)
     {
         direction = dir.normalized;
-        rb.velocity = direction * weaponData.Speed; // Apply velocity instantly
+        rb.velocity = direction * (weaponData.Speed + playerSpeed * 0.5f); // Adjust speed
     }
 
     // Check if the weapon can fire based on its cooldown
