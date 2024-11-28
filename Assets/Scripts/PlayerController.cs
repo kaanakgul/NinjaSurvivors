@@ -41,11 +41,6 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
-    private void LateUpdate()
-    {
-        Animate();
-    }
-
     private void UpdateSpeedFromStats()
     {
         // Dynamically update speed from PlayerStats
@@ -62,34 +57,24 @@ public class PlayerController : MonoBehaviour
         bool up = Input.GetKey(KeyCode.W);
         bool down = Input.GetKey(KeyCode.S);
 
-        if (right && left) { right = false; left = false; }
-        if (up && down) { up = false; down = false; }
-
         Vector3 movement = Vector3.zero;
 
+        // Add movement based on input and obstacle checks
         if (up && !IsObstacleAhead(Vector3.up))
         {
-            ChangeAnimation(UpKey);
             movement += Vector3.up;
         }
-        else if (down && !IsObstacleAhead(Vector3.down))
+        if (down && !IsObstacleAhead(Vector3.down))
         {
-            ChangeAnimation(DownKey);
             movement += Vector3.down;
         }
-        else if (right && !IsObstacleAhead(Vector3.right))
+        if (right && !IsObstacleAhead(Vector3.right))
         {
-            ChangeAnimation(RightKey);
             movement += Vector3.right;
         }
-        else if (left && !IsObstacleAhead(Vector3.left))
+        if (left && !IsObstacleAhead(Vector3.left))
         {
-            ChangeAnimation(LeftKey);
             movement += Vector3.left;
-        }
-        else
-        {
-            ChangeAnimation(IdleKey);
         }
 
         // Normalize movement if moving diagonally
@@ -100,6 +85,43 @@ public class PlayerController : MonoBehaviour
 
         // Apply movement with speed
         transform.position += speed * Time.deltaTime * movement;
+
+        // Update animations based on movement
+        UpdateAnimations(movement);
+    }
+
+    private void UpdateAnimations(Vector3 movement)
+    {
+        if (movement == Vector3.zero)
+        {
+            ChangeAnimation(IdleKey);
+            return;
+        }
+
+        if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
+        {
+            // Horizontal movement
+            if (movement.x > 0)
+            {
+                ChangeAnimation(RightKey);
+            }
+            else
+            {
+                ChangeAnimation(LeftKey);
+            }
+        }
+        else
+        {
+            // Vertical movement
+            if (movement.y > 0)
+            {
+                ChangeAnimation(UpKey);
+            }
+            else
+            {
+                ChangeAnimation(DownKey);
+            }
+        }
     }
 
     private void ChangeAnimation(string animationName)
@@ -110,11 +132,6 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger(currentAnimation);
     }
 
-    private void Animate()
-    {
-        // Retain this method in case you need further animation updates
-    }
-
     private bool IsObstacleAhead(Vector3 direction)
     {
         Vector3 checkPosition = transform.position + direction * obstacleDistance;
@@ -122,6 +139,7 @@ public class PlayerController : MonoBehaviour
         Collider2D col = Physics2D.OverlapBox(checkPosition, Vector2.one * 0.2f, 0, LayerMask.GetMask("Obstacle"));
         return col != null;
     }
+
     public Vector2 GetCurrentDirection()
     {
         Vector2 direction = Vector2.zero;
