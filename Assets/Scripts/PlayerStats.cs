@@ -24,7 +24,9 @@ public class PlayerStats : MonoBehaviour
 
     public float regenRate = 0.1f;
     public float moveSpeed = 5f;
+    public float maxMoveSpeed = 20f;
     public float attackSpeedMultiplier = 1f;
+    public float maxAttackSpeedMultiplier = 0.1f; // Lower values mean faster attacks
     public float damageMultiplier = 1f;
 
     private float elapsedTime = 0f;
@@ -137,13 +139,28 @@ public class PlayerStats : MonoBehaviour
 
     public void UpgradeMoveSpeed()
     {
-        moveSpeed += 0.5f;
-        Debug.Log($"Move speed upgraded to {moveSpeed}");
+        if (moveSpeed < maxMoveSpeed)
+        {
+            moveSpeed += 0.5f;
+            Debug.Log($"Move Speed upgraded to {moveSpeed}");
+        }
+        else
+        {
+            Debug.Log("Move Speed is already at the maximum value.");
+        }
     }
 
     public void UpgradeAttackSpeed()
     {
-        attackSpeedMultiplier *= 0.9f;
+        if (attackSpeedMultiplier > maxAttackSpeedMultiplier)
+        {
+            attackSpeedMultiplier *= 0.9f;
+            Debug.Log($"Attack Speed upgraded to {attackSpeedMultiplier}");
+        }
+        else
+        {
+            Debug.Log("Attack Speed is already at the maximum value.");
+        }
     }
 
     public void UpgradeDamage()

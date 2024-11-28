@@ -10,4 +10,5 @@ public class WeaponData : ScriptableObject
     public bool isRanged; // Indicates if the weapon is ranged
     public float Speed = 1.0f; // Projectile speed for ranged weapons
     public float rotationSpeed = 360f; // Rotation speed for projectiles (if applicable)
+    public float range = 5f; //Attack Range for Melee weapons
 }

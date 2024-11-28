@@ -8,6 +8,7 @@ public class WeaponBehavior : MonoBehaviour
     private Rigidbody2D rb; // Rigidbody for ranged weapons
     private float lastFireTime; // Time tracking for cooldowns
     private int currentLevel = 1; // Current weapon level
+    private bool isMelee => !weaponData.isRanged; // Check if weapon is melee
 
     private void Awake()
     {
@@ -21,12 +22,17 @@ public class WeaponBehavior : MonoBehaviour
         {
             Destroy(gameObject, 10f); // Destroy ranged projectiles after 5 seconds
         }
+        if (isMelee)
+        {
+            gameObject.SetActive(false); // Melee weapons are invisible by default
+        }
     }
 
     // Set the direction for ranged weapons
     public void SetDirection(Vector2 dir)
     {
         direction = dir.normalized;
+        rb.velocity = direction * weaponData.Speed; // Apply velocity instantly
     }
 
     // Check if the weapon can fire based on its cooldown
@@ -41,7 +47,22 @@ public class WeaponBehavior : MonoBehaviour
     {
         lastFireTime = Time.time;
     }
+    // Melee attack logic
+    public IEnumerator HandleMeleeAttack(Vector2 attackDirection)
+    {
+        Debug.Log($"Performing melee attack with {weaponData.weaponName}");
 
+        // Position the melee weapon based on the attack direction
+        transform.position = (Vector3)attackDirection + transform.parent.position;
+        transform.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.right, attackDirection));
+
+        // Show weapon and deal damage
+        gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.1f); // Adjust attack duration
+
+        // Hide weapon after attack
+        gameObject.SetActive(false);
+    }
     private void FixedUpdate()
     {
         if (weaponData.isRanged && direction != Vector2.zero)
@@ -54,6 +75,13 @@ public class WeaponBehavior : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.CompareTag("Player"))
+        {
+            // Ignore player collisions
+            Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
+            return;
+        }
+
         if (collision.CompareTag("Enemy"))
         {
             DoDamage(collision);
@@ -61,6 +89,11 @@ public class WeaponBehavior : MonoBehaviour
             if (weaponData.isRanged)
             {
                 Destroy(gameObject);
+            }
+            else
+            {
+                // Optionally add logic for melee weapons, e.g., knockback effects
+                Debug.Log($"Melee weapon {weaponData.weaponName} hit an enemy!");
             }
         }
     }
