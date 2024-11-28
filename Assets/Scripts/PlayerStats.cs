@@ -138,6 +138,7 @@ public class PlayerStats : MonoBehaviour
     public void UpgradeMoveSpeed()
     {
         moveSpeed += 0.5f;
+        Debug.Log($"Move speed upgraded to {moveSpeed}");
     }
 
     public void UpgradeAttackSpeed()

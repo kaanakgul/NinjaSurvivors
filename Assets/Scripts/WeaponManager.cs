@@ -10,11 +10,11 @@ public class WeaponManager : MonoBehaviour
     {
         if (Instance == null)
         {
-            Instance = this; // Assign the instance
+            Instance = this;
         }
         else
         {
-            Destroy(gameObject); // Destroy duplicate instances
+            Destroy(gameObject);
         }
     }
 
@@ -27,17 +27,13 @@ public class WeaponManager : MonoBehaviour
 
     private void Start()
     {
-        // Initialize weapon levels
         foreach (var weaponData in weaponDataList)
         {
+            weaponLevels[weaponData.weaponName] = (weaponData.weaponName == "Shuriken") ? 1 : 0;
+
             if (weaponData.weaponName == "Shuriken")
             {
-                weaponLevels[weaponData.weaponName] = 1; // Start with level 1 Shuriken
                 ActivateWeapon(weaponData);
-            }
-            else
-            {
-                weaponLevels[weaponData.weaponName] = 0;
             }
         }
 
@@ -45,7 +41,6 @@ public class WeaponManager : MonoBehaviour
         StartCoroutine(FireRangedWeapons());
     }
 
-    // Activate a weapon (called on level-up or when purchased)
     private void ActivateWeapon(WeaponData weaponData)
     {
         if (!activeWeapons.ContainsKey(weaponData.weaponName))
@@ -64,6 +59,7 @@ public class WeaponManager : MonoBehaviour
         if (currentLevel >= 8)
         {
             Debug.Log($"{weaponName} is already at max level!");
+            LevelUpManager.Instance?.ShowWeaponUpgradeWarning($"{weaponName} is already at max level!");
             return;
         }
 

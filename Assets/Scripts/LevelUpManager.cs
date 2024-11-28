@@ -6,8 +6,7 @@ public class LevelUpManager : MonoBehaviour
     public GameObject statUpgradeScreen; // The stat upgrade screen
     public GameObject weaponUpgradeScreen; // The weapon upgrade screen
 
-    public static LevelUpManager Instance { get; private set; }
-    private bool isUpgrading = false; // Prevent multiple upgrades at once
+    public static LevelUpManager Instance; // Singleton for easy access
 
     private void Awake()
     {
@@ -21,55 +20,37 @@ public class LevelUpManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Trigger the level-up process and display the level-up menu.
-    /// </summary>
+    // Trigger the level-up process and display the level-up menu
     public void TriggerLevelUp(int level)
     {
-        if (isUpgrading) return;
-
         Debug.Log($"Level {level} reached. Triggering level-up UI.");
-        GameManager.Instance?.PauseGame(); // Pause the game using GameManager
         levelUpScreen.SetActive(true); // Show the level-up screen
-        isUpgrading = true; // Prevent multiple level-ups at the same time
+        GameManager.Instance?.PauseGame(); // Pause the game using GameManager
+        Debug.Log("Level-Up process started.");
     }
 
-    /// <summary>
-    /// Open the stat upgrade screen.
-    /// </summary>
+    // Choose to upgrade a stat and display the stat upgrade screen
     public void ChooseStatUpgrade()
     {
-        if (!isUpgrading) return;
-
-        Debug.Log("Stat upgrade option selected.");
+        Debug.Log("ChooseStatUpgrade called.");
         levelUpScreen.SetActive(false); // Hide the main level-up screen
         statUpgradeScreen.SetActive(true); // Show the stat upgrade screen
+        Debug.Log("Stat upgrade screen displayed.");
     }
 
-    /// <summary>
-    /// Open the weapon upgrade screen.
-    /// </summary>
+    // Choose to upgrade a weapon and display the weapon upgrade screen
     public void ChooseWeaponUpgrade()
     {
-        if (!isUpgrading) return;
-
-        Debug.Log("Weapon upgrade option selected.");
+        Debug.Log("ChooseWeaponUpgrade called.");
         levelUpScreen.SetActive(false); // Hide the main level-up screen
         weaponUpgradeScreen.SetActive(true); // Show the weapon upgrade screen
+        Debug.Log("Weapon upgrade screen displayed.");
     }
 
-    /// <summary>
-    /// Apply a stat upgrade based on the selected stat type.
-    /// </summary>
+    // Apply a stat upgrade based on the selected stat type
     public void UpgradeStat(string statType)
     {
-        Debug.Log($"UpgradeStat button pressed with parameter: {statType}");
-
-        if (!isUpgrading || PlayerStats.Instance == null)
-        {
-            Debug.LogWarning("UpgradeStat failed: either not upgrading or PlayerStats instance is null.");
-            return;
-        }
+        if (PlayerStats.Instance == null) return;
 
         switch (statType)
         {
@@ -94,34 +75,31 @@ public class LevelUpManager : MonoBehaviour
         CloseUpgradeScreens();
     }
 
-    /// <summary>
-    /// Apply a weapon upgrade based on the selected weapon name.
-    /// </summary>
+    // Apply a weapon upgrade based on the selected weapon name
     public void UpgradeWeapon(string weaponName)
     {
-        Debug.Log($"UpgradeWeapon button pressed with parameter: {weaponName}");
-
-        if (!isUpgrading || WeaponManager.Instance == null)
-        {
-            Debug.LogWarning("UpgradeWeapon failed: either not upgrading or WeaponManager instance is null.");
-            return;
-        }
+        if (WeaponManager.Instance == null) return;
 
         WeaponManager.Instance.UpgradeWeapon(weaponName);
         Debug.Log($"Weapon '{weaponName}' upgraded successfully.");
         CloseUpgradeScreens();
     }
 
-    /// <summary>
-    /// Close all upgrade screens and resume the game.
-    /// </summary>
+    public void ShowWeaponUpgradeWarning(string message)
+    {
+        Debug.Log(message);
+        // Additional UI logic to display the warning in-game can be added here
+    }
+
+    // Close all upgrade screens and resume the game
     private void CloseUpgradeScreens()
     {
+        Debug.Log("Closing upgrade screens...");
         levelUpScreen.SetActive(false);
         statUpgradeScreen.SetActive(false);
         weaponUpgradeScreen.SetActive(false);
 
-        GameManager.Instance?.ResumeGame(); // Resume the game using GameManager
-        isUpgrading = false; // Allow future upgrades
+        GameManager.Instance.ResumeGame(); // Resume the game using GameManager
+        Debug.Log("Upgrade process complete.");
     }
 }

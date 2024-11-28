@@ -691926,15 +691926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 000af32e0bf6fb74a914911fc09363f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
   obstacleDistance: 0.2
-  animator: {fileID: 1962688405}
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 64
-  doorMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!95 &1962688405
 Animator:
   serializedVersion: 5
@@ -692309,7 +692301,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
+  m_AnchoredPosition: {x: -4.9999695, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2078550778

@@ -32,7 +32,8 @@ public class WeaponBehavior : MonoBehaviour
     // Check if the weapon can fire based on its cooldown
     public bool CanFire()
     {
-        return Time.time >= lastFireTime + weaponData.cooldown;
+        float adjustedCooldown = weaponData.cooldown * PlayerStats.Instance.attackSpeedMultiplier;
+        return Time.time >= lastFireTime + adjustedCooldown;
     }
 
     // Reset fire cooldown after firing
@@ -69,15 +70,14 @@ public class WeaponBehavior : MonoBehaviour
         var enemyBehaviour = enemy.GetComponent<EnemyBehaviour>();
         if (enemyBehaviour != null)
         {
-            enemyBehaviour.TakeDamage(weaponData.damageAmount);
+            float adjustedDamage = weaponData.damageAmount * PlayerStats.Instance.damageMultiplier;
+            enemyBehaviour.TakeDamage(adjustedDamage);
         }
     }
 
     // Handle visibility for melee weapons
     public IEnumerator HandleVisibility()
     {
-        Debug.Log($"Handling visibility for {weaponData.weaponName}");
-
         gameObject.SetActive(true); // Enable visibility
         yield return new WaitForSeconds(0.5f); // Adjust duration as needed
         gameObject.SetActive(false); // Hide after attack

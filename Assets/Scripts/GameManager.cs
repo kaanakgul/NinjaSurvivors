@@ -77,10 +77,23 @@ public class GameManager : MonoBehaviour
     {
         if (levelUpPanel != null)
         {
-            levelUpPanel.SetActive(true);
-            PauseGame();
+            if (!levelUpPanel.activeSelf) // Ensure the panel isn't already active
+            {
+                levelUpPanel.SetActive(true);
+                Debug.Log("Level-Up Panel displayed.");
+                PauseGame(); // Pause the game only when displaying the panel
+            }
+            else
+            {
+                Debug.LogWarning("Level-Up Panel is already active!");
+            }
+        }
+        else
+        {
+            Debug.LogError("Level-Up Panel is not assigned in GameManager!");
         }
     }
+
 
     /// <summary>
     /// Close the level-up panel.

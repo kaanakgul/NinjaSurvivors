@@ -1,43 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f;
+    public static PlayerController Instance { get; private set; } // Singleton instance
+    private float speed; // Movement speed derived from PlayerStats
+    public float obstacleDistance = 0.5f; // Distance for obstacle detection
+    private string currentAnimation; // Current active animation
+    private Animator animator;
 
-    public float obstacleDistance;
-
-    const float InputThreshold = 0f;
-
-    const string UpKey = "WalkUp";
-    const string DownKey = "WalkDown";
-    const string RightKey = "WalkRight";
-    const string LeftKey = "WalkLeft";
-    const string IdleKey = "Idle";
-
-    string currentAnimation, newAnimation;
-
-    public Animator animator;
-
-    //public Transform up, down, right, left;
-
-    enum Direction { Left, Right, Up, Down, LeftDown, LeftUp, RightDown, RightUp };
-
-    public LayerMask obstacleMask, doorMask;
-
-
-    public static PlayerController Instance;
+    private const string UpKey = "WalkUp";
+    private const string DownKey = "WalkDown";
+    private const string RightKey = "WalkRight";
+    private const string LeftKey = "WalkLeft";
+    private const string IdleKey = "Idle";
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this; // Assign instance
+        }
+        else
+        {
+            Destroy(gameObject); // Prevent duplicates
+        }
         animator = GetComponent<Animator>();
     }
 
-    void Update()
+    private void Start()
     {
+        if (PlayerStats.Instance != null)
+        {
+            speed = PlayerStats.Instance.moveSpeed; // Initialize speed from PlayerStats
+        }
+    }
+
+    private void Update()
+    {
+        UpdateSpeedFromStats();
         Move();
     }
 
@@ -46,62 +46,53 @@ public class PlayerController : MonoBehaviour
         Animate();
     }
 
-    void Move()
+    private void UpdateSpeedFromStats()
+    {
+        // Dynamically update speed from PlayerStats
+        if (PlayerStats.Instance != null)
+        {
+            speed = PlayerStats.Instance.moveSpeed;
+        }
+    }
+
+    private void Move()
     {
         bool right = Input.GetKey(KeyCode.D);
         bool left = Input.GetKey(KeyCode.A);
         bool up = Input.GetKey(KeyCode.W);
         bool down = Input.GetKey(KeyCode.S);
 
-        if (right && left)
-        {
-            right = false;
-            left = false;
-        }
-
-        if (up && down)
-        {
-            up = false;
-            down = false;
-        }
+        if (right && left) { right = false; left = false; }
+        if (up && down) { up = false; down = false; }
 
         Vector3 movement = Vector3.zero;
 
-        if (up)
+        if (up && !IsObstacleAhead(Vector3.up))
         {
-            if (IsObstacleAhaed(Direction.Up)) return;
-
             ChangeAnimation(UpKey);
             movement += Vector3.up;
         }
-        if (down)
+        else if (down && !IsObstacleAhead(Vector3.down))
         {
-            if (IsObstacleAhaed(Direction.Down)) return;
-
             ChangeAnimation(DownKey);
             movement += Vector3.down;
         }
-        if (right)
+        else if (right && !IsObstacleAhead(Vector3.right))
         {
-            if (IsObstacleAhaed(Direction.Right)) return;
-
             ChangeAnimation(RightKey);
             movement += Vector3.right;
         }
-        if (left)
+        else if (left && !IsObstacleAhead(Vector3.left))
         {
-            if (IsObstacleAhaed(Direction.Left)) return;
-
             ChangeAnimation(LeftKey);
             movement += Vector3.left;
         }
-
-        if (!down && !up && !right && !left)
+        else
         {
             ChangeAnimation(IdleKey);
         }
 
-        // Normalize the movement vector if moving diagonally
+        // Normalize movement if moving diagonally
         if (movement.magnitude > 1f)
         {
             movement.Normalize();
@@ -111,62 +102,24 @@ public class PlayerController : MonoBehaviour
         transform.position += movement * speed * Time.deltaTime;
     }
 
-
-    void ChangeAnimation(string animationName)
+    private void ChangeAnimation(string animationName)
     {
-        newAnimation = animationName;
-    }
+        if (currentAnimation == animationName) return;
 
-    void Animate()
-    {
-        if (newAnimation == currentAnimation) return;
-
-
-        currentAnimation = newAnimation;
-
+        currentAnimation = animationName;
         animator.SetTrigger(currentAnimation);
-
     }
 
-    bool IsObstacleAhaed(Direction dir)
+    private void Animate()
     {
-       // Transform check = up;
-
-        Vector3 vec;
-
-        if (dir == Direction.Left)
-        {
-            vec = transform.position - Vector3.right * obstacleDistance;
-        }
-        else if (dir == Direction.Right)
-        {
-            vec = transform.position + Vector3.right * obstacleDistance;
-        }
-        else if (dir == Direction.Up)
-        {
-            vec = transform.position + Vector3.up * obstacleDistance;
-        }
-        else { vec = transform.position - Vector3.up * obstacleDistance; }
-
-        
-
-      
-        Collider2D cols = Physics2D.OverlapBox(vec, Vector3.one / 5f, 0, obstacleMask);
-
-
-
-        if (cols == null)
-        {
-            return false;
-        }
-
-
-
-        return true;
+        // Retain this method in case you need further animation updates
     }
 
-  
-    
+    private bool IsObstacleAhead(Vector3 direction)
+    {
+        Vector3 checkPosition = transform.position + direction * obstacleDistance;
+
+        Collider2D col = Physics2D.OverlapBox(checkPosition, Vector2.one * 0.2f, 0, LayerMask.GetMask("Obstacle"));
+        return col != null;
+    }
 }
-
-
