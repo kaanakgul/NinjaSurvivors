@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [Header("UI References")]
     public GameObject restartPanel; // Restart panel UI
     public GameObject levelUpPanel; // Level-up panel UI
+    private bool isGameOver = false; // Track if the game is over
 
     private void Awake()
     {
@@ -29,6 +30,15 @@ public class GameManager : MonoBehaviour
 
         if (levelUpPanel != null)
             levelUpPanel.SetActive(false);
+    }
+
+    private void Update()
+    {
+        // Check for restart input if the game is over
+        if (isGameOver && Input.GetKeyDown(KeyCode.R))
+        {
+            RestartGame();
+        }
     }
 
     /// <summary>
@@ -56,6 +66,7 @@ public class GameManager : MonoBehaviour
     {
         if (restartPanel != null)
         {
+            isGameOver = true;
             restartPanel.SetActive(true);
             PauseGame();
         }
@@ -66,9 +77,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void RestartGame()
     {
+        isGameOver = false; // Reset game-over status
         ResumeGame(); // Ensure time scale is reset
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log("Game Restarted.");
     }
+
 
     /// <summary>
     /// Show the level-up panel.
