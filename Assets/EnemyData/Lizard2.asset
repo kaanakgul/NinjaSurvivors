@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb4962bdc996dd04e9a2454f2bdb656f, type: 3}
+  m_Name: Lizard2
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 5769744676959606751, guid: e107c9e1542b64ed1b18715e9901c6fd, type: 3}
+  health: 50
+  speed: 5
+  damage: 5
+  attackSpeed: 5
+  minGold: 1
+  maxGold: 5
+  minExp: 10
+  maxExp: 20

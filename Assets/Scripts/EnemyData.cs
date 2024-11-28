@@ -1,24 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "NewEnemyData", menuName = "Enemy/Enemy Data")]
+public class EnemyData : ScriptableObject
+{
+    public GameObject prefab;     // The enemy prefab
+    public float health;          // Health of the enemy
+    public float speed;           // Movement speed
+    public float damage;          // Damage dealt to the player
+    public float attackSpeed;     // Attack cooldown duration
 
-
-    [System.Serializable]
-    public class EnemyData
-    {
-        public GameObject prefab;     // The enemy prefab to instantiate
-        public float health;          // Health of the enemy
-        public float speed;           // Speed of the enemy
-        public float damage;          // Damage the enemy deals
-        public float attackSpeed;     // How often the enemy attacks
-
-
-        // Reward ranges
-        public int minGold = 1;
-        public int maxGold = 5;
-        public int minExp = 10;
-        public int maxExp = 20;
-
-
+    // Rewards
+    public int minGold = 1;       // Minimum gold reward
+    public int maxGold = 5;       // Maximum gold reward
+    public int minExp = 10;       // Minimum EXP reward
+    public int maxExp = 20;       // Maximum EXP reward
 }

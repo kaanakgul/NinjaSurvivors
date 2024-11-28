@@ -1,15 +1,16 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyBehaviour : MonoBehaviour
 {
+    public EnemyData enemyData; // Reference to EnemyData ScriptableObject
+    public Animator animator;   // Animator for enemy animations
     private NavMeshAgent navMeshAgent;
-    public Animator animator;
-    private Transform target; // Target (e.g., player)
 
+    private Transform target;   // Target (e.g., player)
     private float currentHealth;
-
-    public EnemyData enemyData; // Enemy stats from ScriptableObject
+    private Coroutine attackCoroutine; // Reference to the attack coroutine
 
     private void Awake()
     {
@@ -117,6 +118,41 @@ public class EnemyBehaviour : MonoBehaviour
             animator.SetBool("WalkDown", direction.y < 0 && Mathf.Abs(direction.y) > Mathf.Abs(direction.x));
             animator.SetBool("WalkRight", direction.x > 0 && Mathf.Abs(direction.x) > Mathf.Abs(direction.y));
             animator.SetBool("WalkLeft", direction.x < 0 && Mathf.Abs(direction.x) > Mathf.Abs(direction.y));
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && attackCoroutine == null)
+        {
+            // Start attacking the player
+            attackCoroutine = StartCoroutine(AttackPlayer(collision.gameObject));
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && attackCoroutine != null)
+        {
+            // Stop attacking the player
+            StopCoroutine(attackCoroutine);
+            attackCoroutine = null;
+            Debug.Log("Enemy stopped attacking the player.");
+        }
+    }
+
+    private IEnumerator AttackPlayer(GameObject player)
+    {
+        PlayerStats playerStats = player.GetComponent<PlayerStats>();
+
+        if (playerStats != null && !playerStats.IsDead)
+        {
+            while (true)
+            {
+                playerStats.TakeDamage(enemyData.damage);
+                Debug.Log($"Enemy dealt {enemyData.damage} damage to the player.");
+                yield return new WaitForSeconds(enemyData.attackSpeed); // Wait for attack cooldown
+            }
         }
     }
 }

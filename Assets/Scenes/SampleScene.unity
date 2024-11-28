@@ -692021,141 +692021,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTypes:
-  - prefab: {fileID: 6195579143891750045, guid: edd98d813521e9e448be00130d7e485f, type: 3}
-    health: 100
-    speed: 2
-    damage: 20
-    attackSpeed: 0.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 834255288876157338, guid: 1f262a5770c484487b99304b3defab76, type: 3}
-    health: 100
-    speed: 3
-    damage: 12
-    attackSpeed: 0.4
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 1149394497410173200, guid: b327e1526dd8daf4b8808bfc4346cea5, type: 3}
-    health: 50
-    speed: 5
-    damage: 5
-    attackSpeed: 0.3
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 2230099778332331954, guid: 8a51734b902bd034293cec14def4b150, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 1543395542522328332, guid: 2a933824ae4af4200af31c75fef87686, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 2169894618667897136, guid: eeedf2d029d764e82b1d5f1a150f2817, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 8643971284284950943, guid: 4568457c3e5ec41298db0c41ab990610, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 1722810089205639537, guid: abf1cb01a14b1432b8c029c23737298d, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 2822214596396074735, guid: e3747883408414df384ed2e0702d8808, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 442872404851066976, guid: eb307ca1069434de0838e0ed854cd58e, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 5769744676959606751, guid: e107c9e1542b64ed1b18715e9901c6fd, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 4219902254358749389, guid: f02ed377a845f42158f329664671c19d, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 3442728749327809765, guid: 1158af8effaf349f38c9abf72762a9d5, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 5734037537018629841, guid: b1a8b7839b9774c0cad58cade0ca80c1, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
-  - prefab: {fileID: 7278465254814068108, guid: 612bf42dceaf843b5adbc824d85b4195, type: 3}
-    health: 200
-    speed: 1
-    damage: 15
-    attackSpeed: 1.5
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
+  - {fileID: 11400000, guid: 1cd1dbe9fbab1bb40ad4d6ebf95cbd64, type: 2}
+  - {fileID: 11400000, guid: fd5e2cd1fc12db647aab5e8f2a3516a8, type: 2}
+  - {fileID: 11400000, guid: 962dfb81747296646b72909f39eafefe, type: 2}
+  - {fileID: 11400000, guid: c3f189aff04a5d245b7f42ec277c3cf2, type: 2}
+  - {fileID: 11400000, guid: b79be2da7ecd6df44922936c19055959, type: 2}
+  - {fileID: 11400000, guid: 2090277869467cf4cbbb4adcec6a3ae4, type: 2}
+  - {fileID: 11400000, guid: 76cf98d2b08b9454e9d24cb5b4f24a08, type: 2}
+  - {fileID: 11400000, guid: c0002a1acea6190448b7d731f42d451c, type: 2}
+  - {fileID: 11400000, guid: 9a9fec2d23521c745b7fc6e9aa05dca4, type: 2}
+  - {fileID: 11400000, guid: af92ff4cb9c58504dae8ed0bcf05c20b, type: 2}
+  - {fileID: 11400000, guid: 09a248b2144b69a4593c30a7c3410394, type: 2}
+  - {fileID: 11400000, guid: 55e5d1eadcfda6745bbb6292831e0265, type: 2}
+  - {fileID: 11400000, guid: 125311200378e4c49b271062be8deb09, type: 2}
+  - {fileID: 11400000, guid: 4b73f22faa71fc54895a798e2e25e2b3, type: 2}
+  - {fileID: 11400000, guid: f18c455a32b8a6c4e99eae766351d95f, type: 2}
   player: {fileID: 1962688399}
   initialSpawnRate: 2
   maxEnemies: 10000

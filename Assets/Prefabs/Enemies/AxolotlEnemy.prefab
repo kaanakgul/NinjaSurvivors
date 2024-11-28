@@ -173,17 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d1b35649237e224f8916cd97a6e29ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: 1cd1dbe9fbab1bb40ad4d6ebf95cbd64, type: 2}
   animator: {fileID: 4141932936632587015}
-  enemyData:
-    prefab: {fileID: 0}
-    health: 0
-    speed: 0
-    damage: 0
-    attackSpeed: 0
-    minGold: 1
-    maxGold: 5
-    minExp: 10
-    maxExp: 20
 --- !u!95 &4141932936632587015
 Animator:
   serializedVersion: 5
