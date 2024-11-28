@@ -19,7 +19,7 @@ public class WeaponBehavior : MonoBehaviour
         lastFireTime = Time.time;
         if (weaponData.isRanged)
         {
-            Destroy(gameObject, 5f); // Destroy ranged projectiles after 5 seconds
+            Destroy(gameObject, 10f); // Destroy ranged projectiles after 5 seconds
         }
     }
 
@@ -46,8 +46,9 @@ public class WeaponBehavior : MonoBehaviour
     {
         if (weaponData.isRanged && direction != Vector2.zero)
         {
-            rb.velocity = direction * weaponData.Speed; // Set velocity
-            transform.Rotate(0, 0, -weaponData.rotationSpeed * Time.fixedDeltaTime); // Rotate projectile
+            float adjustedSpeed = weaponData.Speed / PlayerStats.Instance.attackSpeedMultiplier;
+            rb.velocity = direction * adjustedSpeed; // Adjust velocity
+            transform.Rotate(0, 0, -weaponData.rotationSpeed * Time.    fixedDeltaTime); // Rotate projectile
         }
     }
 
@@ -91,15 +92,6 @@ public class WeaponBehavior : MonoBehaviour
         Debug.Log($"{weaponData.weaponName} leveled up to {newLevel}!");
 
         currentLevel = newLevel;
-
-        // Adjust weapon stats based on the level
-        weaponData.damageAmount += 5f * (newLevel - 1);
-        weaponData.cooldown *= 0.9f;
-
-        if (weaponData.isRanged)
-        {
-            weaponData.Speed += 1f * (newLevel - 1);
-        }
     }
 
     // Get the current level of the weapon

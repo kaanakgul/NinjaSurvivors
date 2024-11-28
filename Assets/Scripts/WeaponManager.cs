@@ -51,16 +51,16 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    public void UpgradeWeapon(string weaponName)
+    public bool UpgradeWeapon(string weaponName)
     {
-        if (!weaponLevels.ContainsKey(weaponName)) return;
+        if (!weaponLevels.ContainsKey(weaponName)) return false;
 
         int currentLevel = weaponLevels[weaponName];
         if (currentLevel >= 8)
         {
             Debug.Log($"{weaponName} is already at max level!");
             LevelUpManager.Instance?.ShowWeaponUpgradeWarning($"{weaponName} is already at max level!");
-            return;
+            return false; // Upgrade was not successful
         }
 
         weaponLevels[weaponName]++;
@@ -77,7 +77,10 @@ public class WeaponManager : MonoBehaviour
         {
             activeWeapons[weaponName].LevelUp(newLevel);
         }
+
+        return true; // Upgrade was successful
     }
+
 
     public int GetWeaponLevel(string weaponName)
     {
@@ -138,7 +141,7 @@ public class WeaponManager : MonoBehaviour
             if (behavior != null)
             {
                 behavior.SetDirection(direction);
-                Destroy(projectile, 5f);
+                Destroy(projectile, 10f);
             }
         }
     }

@@ -80,9 +80,19 @@ public class LevelUpManager : MonoBehaviour
     {
         if (WeaponManager.Instance == null) return;
 
-        WeaponManager.Instance.UpgradeWeapon(weaponName);
-        Debug.Log($"Weapon '{weaponName}' upgraded successfully.");
-        CloseUpgradeScreens();
+        // Check if the upgrade was successful
+        bool upgradeSuccessful = WeaponManager.Instance.UpgradeWeapon(weaponName);
+
+        if (upgradeSuccessful)
+        {
+            Debug.Log($"Weapon '{weaponName}' upgraded successfully.");
+            CloseUpgradeScreens(); // Close the menu only if the upgrade was successful
+        }
+        else
+        {
+            Debug.Log($"Weapon '{weaponName}' is already at max level.");
+            // The menu remains open, and the player can select another upgrade
+        }
     }
 
     public void ShowWeaponUpgradeWarning(string message)
