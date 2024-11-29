@@ -20,11 +20,7 @@ public class WeaponBehavior : MonoBehaviour
         lastFireTime = Time.time;
         if (weaponData.isRanged)
         {
-            Destroy(gameObject, 10f); // Destroy ranged projectiles after 5 seconds
-        }
-        if (isMelee)
-        {
-            gameObject.SetActive(false); // Melee weapons are invisible by default
+            Destroy(gameObject, 10f); // Destroy ranged projectiles after a set duration
         }
     }
 
@@ -47,29 +43,53 @@ public class WeaponBehavior : MonoBehaviour
     {
         lastFireTime = Time.time;
     }
-    // Melee attack logic
-    public IEnumerator HandleMeleeAttack(Vector2 attackDirection)
+
+    // Melee attack visibility and logic
+    public void PerformMeleeAttack(Vector2 attackDirection)
     {
         Debug.Log($"Performing melee attack with {weaponData.weaponName}");
 
-        // Position the melee weapon based on the attack direction
+        // Position the melee weapon
         transform.position = (Vector3)attackDirection + transform.parent.position;
         transform.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.right, attackDirection));
 
-        // Show weapon and deal damage
+        // Enable weapon visibility
         gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f); // Adjust attack duration
 
-        // Hide weapon after attack
+        // Detect enemies within attack range
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, weaponData.range);
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            if (enemy.CompareTag("Enemy"))
+            {
+                var enemyBehavior = enemy.GetComponent<EnemyBehaviour>();
+                if (enemyBehavior != null)
+                {
+                    float adjustedDamage = weaponData.damageAmount * PlayerStats.Instance.damageMultiplier;
+                    enemyBehavior.TakeDamage(adjustedDamage);
+                    Debug.Log($"Hit {enemy.name} for {adjustedDamage} damage.");
+                }
+            }
+        }
+
+        // Schedule hiding after attack
+        StartCoroutine(HideAfterAttack(weaponData.cooldown));
+    }
+
+    // Handle visibility hiding after a melee attack
+    private IEnumerator HideAfterAttack(float duration)
+    {
+        yield return new WaitForSeconds(duration);
         gameObject.SetActive(false);
     }
+
     private void FixedUpdate()
     {
         if (weaponData.isRanged && direction != Vector2.zero)
         {
             float adjustedSpeed = weaponData.Speed / PlayerStats.Instance.attackSpeedMultiplier;
             rb.velocity = direction * adjustedSpeed; // Adjust velocity
-            transform.Rotate(0, 0, -weaponData.rotationSpeed * Time.    fixedDeltaTime); // Rotate projectile
+            transform.Rotate(0, 0, -weaponData.rotationSpeed * Time.fixedDeltaTime); // Rotate projectile
         }
     }
 
@@ -77,7 +97,6 @@ public class WeaponBehavior : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            // Ignore player collisions
             Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
             return;
         }
@@ -89,11 +108,6 @@ public class WeaponBehavior : MonoBehaviour
             if (weaponData.isRanged)
             {
                 Destroy(gameObject);
-            }
-            else
-            {
-                // Optionally add logic for melee weapons, e.g., knockback effects
-                Debug.Log($"Melee weapon {weaponData.weaponName} hit an enemy!");
             }
         }
     }
@@ -109,27 +123,13 @@ public class WeaponBehavior : MonoBehaviour
         }
     }
 
-    // Handle visibility for melee weapons
-    public IEnumerator HandleVisibility()
-    {
-        gameObject.SetActive(true); // Enable visibility
-        yield return new WaitForSeconds(0.5f); // Adjust duration as needed
-        gameObject.SetActive(false); // Hide after attack
-    }
-
     // Handle weapon level-ups dynamically
     public void LevelUp(int newLevel)
     {
         if (newLevel <= currentLevel || newLevel > 8) return; // Validate level
-
         Debug.Log($"{weaponData.weaponName} leveled up to {newLevel}!");
-
         currentLevel = newLevel;
     }
 
-    // Get the current level of the weapon
-    public int GetCurrentLevel()
-    {
-        return currentLevel;
-    }
+    public int GetCurrentLevel() => currentLevel; // Get current weapon level
 }

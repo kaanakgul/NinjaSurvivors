@@ -112,28 +112,13 @@ public class WeaponManager : MonoBehaviour
     {
         Debug.Log($"Performing melee attack with {weaponData.weaponName} at level {level}");
 
-        // Find the corresponding weapon
         if (!activeWeapons.TryGetValue(weaponData.weaponName, out WeaponBehavior weaponBehavior)) return;
 
-        // Make the weapon visible
-        weaponBehavior.gameObject.SetActive(true);
+        // Determine the attack direction
+        Vector2 attackDirection = PlayerController.Instance.GetCurrentDirection();
 
-        // Detect enemies within attack range
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(firePoint.position, weaponData.range);
-        foreach (Collider2D enemy in hitEnemies)
-        {
-            if (enemy.CompareTag("Enemy"))
-            {
-                var enemyBehavior = enemy.GetComponent<EnemyBehaviour>();
-                if (enemyBehavior != null)
-                {
-                    enemyBehavior.TakeDamage(weaponData.damageAmount);
-                }
-            }
-        }
-
-        // Schedule the weapon to become invisible after attack
-        StartCoroutine(weaponBehavior.HandleVisibility());
+        // Trigger the melee attack
+        weaponBehavior.PerformMeleeAttack(attackDirection);
     }
 
 
