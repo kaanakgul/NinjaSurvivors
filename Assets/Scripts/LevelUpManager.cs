@@ -112,4 +112,17 @@ public class LevelUpManager : MonoBehaviour
         GameManager.Instance.ResumeGame(); // Resume the game using GameManager
         Debug.Log("Upgrade process complete.");
     }
+
+    public void GoBackToLevelUp()
+    {
+        Debug.Log("Returning to Level-Up menu.");
+
+        // Hide all upgrade screens
+        statUpgradeScreen.SetActive(false);
+        weaponUpgradeScreen.SetActive(false);
+
+        // Show the Level-Up screen
+        levelUpScreen.SetActive(true);
+    }
+
 }
