@@ -18,4 +18,5 @@ MonoBehaviour:
   cooldown: 1
   isRanged: 1
   Speed: 5
-  rotationSpeed: 360
+  rotationSpeed: 361
+  range: 5
