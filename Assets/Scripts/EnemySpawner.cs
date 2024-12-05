@@ -9,7 +9,11 @@ public class EnemySpawner : MonoBehaviour
     public List<EnemyData> enemyTypes; // List of different enemy ScriptableObjects
     public Transform player;
     public float initialSpawnRate = 2f;
-    public int maxEnemies = 20;
+    private int maxEnemies = 100; // Base maximum number of enemies
+    private int initialMaxEnemies = 50; // Starting cap
+    private float timeToIncreaseCap = 60f; // Time in seconds to increase the cap
+    private int maxIncreasePerInterval = 20; // Maximum enemies to increase per interval
+
 
     private Camera mainCamera;
     private List<GameObject> spawnedEnemies = new List<GameObject>();
@@ -37,11 +41,23 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(SpawnEnemies());
         StartCoroutine(UnlockEnemyTypes());
         StartCoroutine(ScaleSpawnRateOverTime());
+        StartCoroutine(ScaleEnemyCapOverTime());
     }
 
     private void Update()
     {
         RecycleFarAwayEnemies();
+        // Adjust cap dynamically based on player's level or current stats
+        int playerLevel = PlayerStats.Instance?.level ?? 1;
+
+        if (playerLevel < 5)
+        {
+            maxEnemies = Mathf.Max(initialMaxEnemies, 50 + playerLevel * 10);
+        }
+        else if (playerLevel >= 10)
+        {
+            maxEnemies = Mathf.Min(maxEnemies, 300); // Cap at 300 for high levels
+        }
     }
 
     private IEnumerator SpawnEnemies()
@@ -67,11 +83,27 @@ public class EnemySpawner : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("Generated position is not on the NavMesh. Skipping spawn.");
+                    Debug.Log("Enemy cap reached. No more enemies will be spawned until some are recycled. Enemy cap is currently: " + maxEnemies);
+                    yield return null; // Skip spawning
                 }
             }
 
             yield return new WaitForSeconds(currentSpawnRate);
+        }
+    }
+
+    private IEnumerator ScaleEnemyCapOverTime()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(timeToIncreaseCap);
+
+            // Increase max enemies as time progresses
+            if (maxEnemies < 500) // Ensure there's an upper limit
+            {
+                maxEnemies += maxIncreasePerInterval;
+                Debug.Log($"Max enemies increased to {maxEnemies}");
+            }
         }
     }
 

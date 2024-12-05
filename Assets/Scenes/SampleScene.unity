@@ -693495,7 +693495,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f18c455a32b8a6c4e99eae766351d95f, type: 2}
   player: {fileID: 1962688399}
   initialSpawnRate: 2
-  maxEnemies: 10000
+  maxEnemies: 500
   backgroundTilemap: {fileID: 600884065}
   recycleDistanceThreshold: 25
   timeBeforeScaling: 15
