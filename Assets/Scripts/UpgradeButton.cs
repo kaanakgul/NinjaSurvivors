@@ -6,7 +6,7 @@ public class UpgradeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public string upgradeDescription; // Description of the upgrade
     public string upgradeType; // Type of upgrade (e.g., "Health", "MoveSpeed", etc.)
     public string weaponName; // Weapon name (if this is a weapon upgrade)
-    public int maxLevel = 10; // Max level for the upgrade
+    public int maxLevel = 0; // Max level for the upgrade
     public int cost; // Cost for the upgrade
 
     private LevelUpManager levelUpManager;
@@ -19,7 +19,16 @@ public class UpgradeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerEnter(PointerEventData eventData)
     {
         int currentLevel = GetCurrentLevel();
-        string tooltipContent = $"Level: {currentLevel}/{maxLevel}\n{upgradeDescription}";
+        string tooltipContent = $"{upgradeDescription}";
+
+        if (maxLevel > 0)
+        {
+            tooltipContent = $"Level: {currentLevel}/{maxLevel}\n{tooltipContent}";
+        }
+        else
+        {
+            tooltipContent = $"Level: {currentLevel}\n{tooltipContent}";
+        }
 
         if (cost > 0)
         {

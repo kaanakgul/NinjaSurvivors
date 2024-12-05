@@ -152,6 +152,7 @@ public class PlayerStats : MonoBehaviour
         maxHealth += 10;
         currentHealth = maxHealth;
         UpdateHealthUI();
+        healthLevel += 1;
     }
 
     public void UpgradeMoveSpeed()
@@ -160,6 +161,7 @@ public class PlayerStats : MonoBehaviour
         {
             moveSpeed += 0.5f;
             Debug.Log($"Move Speed upgraded to {moveSpeed}");
+            moveSpeedLevel += 1;
         }
         else
         {
@@ -173,6 +175,7 @@ public class PlayerStats : MonoBehaviour
         {
             attackSpeedMultiplier *= 0.9f;
             Debug.Log($"Attack Speed upgraded to {attackSpeedMultiplier}");
+            attackSpeedLevel += 1;
         }
         else
         {
@@ -183,11 +186,13 @@ public class PlayerStats : MonoBehaviour
     public void UpgradeDamage()
     {
         damageMultiplier += 0.1f;
+        damageLevel += 1;
     }
 
     public void UpradeRegen()
     {
         regenRate += regenRateMultiplier;
+        regenLevel += 1;
     }
 
     public void UpgradeLifesteal()
@@ -197,6 +202,7 @@ public class PlayerStats : MonoBehaviour
             lifestealMultiplier += 0.1f;
             lifestealMultiplier = Mathf.Min(lifestealMultiplier, 1f); // Ensure it doesn’t exceed 1.0 (100%)
             Debug.Log($"Lifesteal upgraded to {lifestealMultiplier * 100}%.");
+            lifestealLevel += 1;
         }
         else
         {
