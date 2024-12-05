@@ -55,6 +55,7 @@ public class WeaponBehavior : MonoBehaviour
 
         // Enable weapon visibility
         gameObject.SetActive(true);
+        
 
         // Detect enemies within attack range
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, weaponData.range);
@@ -120,6 +121,10 @@ public class WeaponBehavior : MonoBehaviour
         {
             float adjustedDamage = weaponData.damageAmount * PlayerStats.Instance.damageMultiplier;
             enemyBehaviour.TakeDamage(adjustedDamage);
+
+
+            // Trigger lifesteal healing
+            PlayerStats.Instance.HealFromLifesteal(adjustedDamage);
         }
     }
 

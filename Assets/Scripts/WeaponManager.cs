@@ -48,6 +48,7 @@ public class WeaponManager : MonoBehaviour
             var weapon = Instantiate(weaponData.prefab, transform).GetComponent<WeaponBehavior>();
             weapon.weaponData = weaponData;
             activeWeapons[weaponData.weaponName] = weapon;
+            
         }
     }
 
@@ -161,4 +162,5 @@ public class WeaponManager : MonoBehaviour
             }
         }
     }
+
 }

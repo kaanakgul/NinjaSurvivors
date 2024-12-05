@@ -7,6 +7,13 @@ public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats Instance { get; private set; }
 
+    public int healthLevel = 1;
+    public int moveSpeedLevel = 1;
+    public int attackSpeedLevel = 1;
+    public int damageLevel = 1;
+    public int lifestealLevel = 1;
+    public int regenLevel = 1;
+
     public float maxHealth = 100.0f;
     public float currentHealth;
     public int gold = 0;
@@ -22,12 +29,14 @@ public class PlayerStats : MonoBehaviour
     public TMP_Text killCounterText;
     public bool IsDead { get; private set; } = false;
 
-    public float regenRate = 0.1f;
+    public float regenRate = 0f;
     public float moveSpeed = 5f;
     public float maxMoveSpeed = 20f;
     public float attackSpeedMultiplier = 1f;
     public float maxAttackSpeedMultiplier = 0.1f; // Lower values mean faster attacks
     public float damageMultiplier = 1f;
+    public float regenRateMultiplier = 5f;
+    public float lifestealMultiplier = 0f;
 
     private float elapsedTime = 0f;
     private int killCount = 0;
@@ -100,6 +109,14 @@ public class PlayerStats : MonoBehaviour
         UpdateHealthUI();
     }
 
+    public void HealFromLifesteal(float damageDealt)
+    {
+        float healAmount = damageDealt * lifestealMultiplier;
+        currentHealth = Mathf.Min(currentHealth + healAmount, maxHealth); // Cap health at maxHealth
+        Debug.Log($"Healed {healAmount} from lifesteal. Current health: {currentHealth}");
+    }
+
+
     public void AddGold(int amount)
     {
         gold += amount;
@@ -166,6 +183,25 @@ public class PlayerStats : MonoBehaviour
     public void UpgradeDamage()
     {
         damageMultiplier += 0.1f;
+    }
+
+    public void UpradeRegen()
+    {
+        regenRate += regenRateMultiplier;
+    }
+
+    public void UpgradeLifesteal()
+    {
+        if (lifestealMultiplier < 1f) // Cap at 100% lifesteal
+        {
+            lifestealMultiplier += 0.1f;
+            lifestealMultiplier = Mathf.Min(lifestealMultiplier, 1f); // Ensure it doesn’t exceed 1.0 (100%)
+            Debug.Log($"Lifesteal upgraded to {lifestealMultiplier * 100}%.");
+        }
+        else
+        {
+            Debug.Log("Lifesteal is already at max level!");
+        }
     }
 
     private void UpdateHealthUI()

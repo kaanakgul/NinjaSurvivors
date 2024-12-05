@@ -1,10 +1,13 @@
 using UnityEngine;
+using TMPro;
 
 public class LevelUpManager : MonoBehaviour
 {
     public GameObject levelUpScreen; // The main level-up screen
     public GameObject statUpgradeScreen; // The stat upgrade screen
     public GameObject weaponUpgradeScreen; // The weapon upgrade screen
+    public GameObject tooltipObject; // Tooltip UI panel
+    public TMP_Text tooltipText; // TMP Text for the tooltip
 
     public static LevelUpManager Instance; // Singleton for easy access
 
@@ -19,6 +22,12 @@ public class LevelUpManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void Start()
+    {
+        tooltipObject.SetActive(false); // Ensure the tooltip is hidden initially
+    }
+
 
     // Trigger the level-up process and display the level-up menu
     public void TriggerLevelUp(int level)
@@ -47,6 +56,28 @@ public class LevelUpManager : MonoBehaviour
         Debug.Log("Weapon upgrade screen displayed.");
     }
 
+    public void ShowTooltip(string content, Vector3 position)
+    {
+        tooltipObject.SetActive(true);
+        tooltipText.text = content;
+
+        // Convert screen position to local position
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            tooltipObject.transform.parent.GetComponent<RectTransform>(), // Parent RectTransform (Canvas)
+            position, // Mouse position
+            Camera.main, // The camera rendering the Canvas
+            out Vector2 localPoint // Output local position
+        );
+
+        tooltipObject.GetComponent<RectTransform>().localPosition = localPoint; // Set the tooltip's position
+    }
+
+    public void HideTooltip()
+    {
+        tooltipObject.SetActive(false);
+    }
+
+
     // Apply a stat upgrade based on the selected stat type
     public void UpgradeStat(string statType)
     {
@@ -65,6 +96,12 @@ public class LevelUpManager : MonoBehaviour
                 break;
             case "Damage":
                 PlayerStats.Instance.UpgradeDamage();
+                break;
+            case "Lifesteal":
+                PlayerStats.Instance.UpgradeLifesteal();
+                break;
+            case "Regen":
+                PlayerStats.Instance.UpradeRegen();
                 break;
             default:
                 Debug.LogWarning($"Invalid stat type '{statType}' selected for upgrade.");
