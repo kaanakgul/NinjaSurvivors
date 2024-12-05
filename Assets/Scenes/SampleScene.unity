@@ -693537,7 +693537,7 @@ MonoBehaviour:
   regenLevel: 1
   maxHealth: 500
   currentHealth: 0
-  gold: 150
+  gold: 0
   experience: 0
   level: 1
   healthSlider: {fileID: 1873008399}
@@ -693603,10 +693603,10 @@ MonoBehaviour:
   initialSpawnRate: 2
   maxEnemies: 10000
   backgroundTilemap: {fileID: 600884065}
-  recycleDistanceThreshold: 100
-  timeBeforeScaling: 10
-  scalingRate: 0.95
-  minSpawnRate: 0.05
+  recycleDistanceThreshold: 25
+  timeBeforeScaling: 15
+  scalingRate: 0.75
+  minSpawnRate: 0.1
   spawnRadiusFromCamera: 1
   spawnBuffer: 0.5
 --- !u!4 &1970616204

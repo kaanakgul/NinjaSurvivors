@@ -16,7 +16,7 @@ public class EnemySpawner : MonoBehaviour
     public Tilemap backgroundTilemap;
     private BoundsInt tilemapBounds;
 
-    public float recycleDistanceThreshold = 100f;
+    public float recycleDistanceThreshold = 20f;
     private int availableEnemyIndex = 0;
     private float nextIntervalTime = 90f;
 
@@ -130,13 +130,38 @@ public class EnemySpawner : MonoBehaviour
             if (spawnedEnemies[i] != null)
             {
                 float distanceToPlayer = Vector3.Distance(spawnedEnemies[i].transform.position, player.position);
+
                 if (distanceToPlayer > recycleDistanceThreshold)
                 {
-                    Vector3 newSpawnPosition = GetSpawnPositionJustOutsideCamera();
+                    // Calculate the direction of the enemy relative to the player
+                    Vector3 enemyDirection = (spawnedEnemies[i].transform.position - player.position).normalized;
 
-                    if (NavMesh.SamplePosition(newSpawnPosition, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+                    // Generate a new spawn position opposite or orthogonal to the current direction
+                    Vector3 newSpawnDirection;
+                    if (Random.value > 0.5f)
+                    {
+                        // Flip the direction to spawn on the opposite side
+                        newSpawnDirection = -enemyDirection;
+                    }
+                    else
+                    {
+                        // Generate a position orthogonal to the enemy's current direction
+                        newSpawnDirection = new Vector3(-enemyDirection.y, enemyDirection.x, 0).normalized;
+                    }
+
+                    // Calculate a new spawn position using the player's position and spawn radius
+                    Vector3 newSpawnPosition = player.position + newSpawnDirection * recycleDistanceThreshold;
+
+                    // Ensure the position is valid (on the NavMesh and within tilemap bounds)
+                    if (NavMesh.SamplePosition(newSpawnPosition, out NavMeshHit hit, 1.0f, NavMesh.AllAreas) &&
+                        tilemapBounds.Contains(backgroundTilemap.WorldToCell(newSpawnPosition)))
                     {
                         spawnedEnemies[i].transform.position = hit.position;
+                    }
+                    else
+                    {
+                        // If the position is invalid, fallback to a random valid position
+                        spawnedEnemies[i].transform.position = GetSpawnPositionJustOutsideCamera();
                     }
                 }
             }
