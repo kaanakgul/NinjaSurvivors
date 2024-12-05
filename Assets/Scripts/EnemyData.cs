@@ -10,8 +10,8 @@ public class EnemyData : ScriptableObject
     public float attackSpeed;     // Attack cooldown duration
 
     // Rewards
-    public int minGold = 1;       // Minimum gold reward
-    public int maxGold = 5;       // Maximum gold reward
-    public int minExp = 10;       // Minimum EXP reward
+    public int minGold = 10;      // Minimum gold reward
+    public int maxGold = 50;     // Maximum gold reward
+    public int minExp = 5;       // Minimum EXP reward
     public int maxExp = 20;       // Maximum EXP reward
 }

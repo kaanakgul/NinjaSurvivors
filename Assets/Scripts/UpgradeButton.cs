@@ -26,12 +26,26 @@ public class UpgradeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             tooltipContent += $"\nCost: {cost} gold";
         }
 
+        if (!string.IsNullOrEmpty(weaponName) && WeaponManager.Instance != null)
+        {
+            int cost = WeaponManager.Instance.GetUpgradeCost(weaponName);
+            tooltipContent += $"\nCost: {cost} gold";
+        }
+
         levelUpManager?.ShowTooltip(tooltipContent, Input.mousePosition);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         levelUpManager?.HideTooltip();
+    }
+
+    public void OnButtonClick()
+    {
+        // Ensure the tooltip is hidden when a button is clicked
+        levelUpManager?.HideTooltip();
+
+        // Add logic for the button click, if needed (e.g., trigger upgrade)
     }
 
     private int GetCurrentLevel()

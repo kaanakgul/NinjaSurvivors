@@ -63,6 +63,19 @@ public class WeaponManager : MonoBehaviour
             LevelUpManager.Instance?.ShowWeaponUpgradeWarning($"{weaponName} is already at max level!");
             return false; // Upgrade was not successful
         }
+        // Calculate the cost
+        int cost = Mathf.RoundToInt(100 * Mathf.Pow(2, currentLevel));
+
+        // Check if the player has enough gold
+        if (PlayerStats.Instance.gold < cost)
+        {
+            Debug.Log($"Not enough gold! {weaponName} upgrade costs {cost} gold.");
+            LevelUpManager.Instance?.ShowWeaponUpgradeWarning($"Not enough gold! {weaponName} upgrade costs {cost} gold.");
+            return false; // Upgrade was not successful
+        }
+        // Deduct the cost and upgrade
+        PlayerStats.Instance.gold -= cost;
+        Debug.Log($"Upgraded {weaponName} to level {currentLevel + 1}. Cost: {cost} gold. Remaining gold: {PlayerStats.Instance.gold}.");
 
         weaponLevels[weaponName]++;
         int newLevel = weaponLevels[weaponName];
@@ -80,6 +93,14 @@ public class WeaponManager : MonoBehaviour
         }
 
         return true; // Upgrade was successful
+    }
+
+    // Add a helper method to get the current cost of upgrading a weapon
+    public int GetUpgradeCost(string weaponName)
+    {
+        if (!weaponLevels.ContainsKey(weaponName)) return 0;
+        int currentLevel = weaponLevels[weaponName];
+        return Mathf.RoundToInt(100 * Mathf.Pow(2, currentLevel));
     }
 
 
