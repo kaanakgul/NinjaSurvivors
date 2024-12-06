@@ -15,8 +15,8 @@ MonoBehaviour:
   weaponName: Axe
   prefab: {fileID: 497965940407203483, guid: faebd75f563829c418bdf067f130ffcb, type: 3}
   damageAmount: 150
-  cooldown: 1
-  isRanged: 1
+  cooldown: 2
   Speed: 5
-  rotationSpeed: 361
+  rotationSpeed: 180
   range: 5
+  travelRange: 15

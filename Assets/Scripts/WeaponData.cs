@@ -7,8 +7,8 @@ public class WeaponData : ScriptableObject
     public GameObject prefab; // The weapon prefab
     public float damageAmount = 50f; // Base damage dealt by the weapon
     public float cooldown = 0.5f; // Base cooldown duration
-    public bool isRanged; // Indicates if the weapon is ranged
     public float Speed = 1.0f; // Projectile speed for ranged weapons
     public float rotationSpeed = 360f; // Rotation speed for projectiles (if applicable)
     public float range = 5f; //Attack Range for Melee weapons
+    public float travelRange = 50f;  // Maximum distance the weapon can travel
 }

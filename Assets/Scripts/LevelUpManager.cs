@@ -35,25 +35,25 @@ public class LevelUpManager : MonoBehaviour
         Debug.Log($"Level {level} reached. Triggering level-up UI.");
         levelUpScreen.SetActive(true); // Show the level-up screen
         GameManager.Instance?.PauseGame(); // Pause the game using GameManager
-        Debug.Log("Level-Up process started.");
+      
     }
 
     // Choose to upgrade a stat and display the stat upgrade screen
     public void ChooseStatUpgrade()
     {
-        Debug.Log("ChooseStatUpgrade called.");
+        
         levelUpScreen.SetActive(false); // Hide the main level-up screen
         statUpgradeScreen.SetActive(true); // Show the stat upgrade screen
-        Debug.Log("Stat upgrade screen displayed.");
+       
     }
 
     // Choose to upgrade a weapon and display the weapon upgrade screen
     public void ChooseWeaponUpgrade()
     {
-        Debug.Log("ChooseWeaponUpgrade called.");
+      
         levelUpScreen.SetActive(false); // Hide the main level-up screen
         weaponUpgradeScreen.SetActive(true); // Show the weapon upgrade screen
-        Debug.Log("Weapon upgrade screen displayed.");
+       
     }
 
     public void ShowTooltip(string content, Vector3 position)

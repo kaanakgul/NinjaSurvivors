@@ -1,10 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    public static WeaponManager Instance { get; private set; } // Singleton instance
+    public static WeaponManager Instance { get; private set; }
+
+    public List<WeaponData> weaponDataList;
+    private Dictionary<string, WeaponBehavior> activeWeapons = new Dictionary<string, WeaponBehavior>();
+
+    private Vector2 currentFireDirection = Vector2.right;
 
     private void Awake()
     {
@@ -18,95 +22,48 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    public List<WeaponData> weaponDataList; // List of all available weapons
-    public Transform firePoint; // Spawn point for ranged projectiles
-    private Vector2 currentFireDirection = Vector2.right; // Default fire direction
-
-    private Dictionary<string, int> weaponLevels = new Dictionary<string, int>();
-    private Dictionary<string, WeaponBehavior> activeWeapons = new Dictionary<string, WeaponBehavior>();
-
     private void Start()
     {
         foreach (var weaponData in weaponDataList)
         {
-            weaponLevels[weaponData.weaponName] = (weaponData.weaponName == "Shuriken") ? 1 : 0;
-
             if (weaponData.weaponName == "Shuriken")
             {
-                ActivateWeapon(weaponData);
+                ActivateWeapon(weaponData, true);
             }
         }
-
-        StartCoroutine(HandleMeleeWeapons());
-        StartCoroutine(FireRangedWeapons());
     }
 
-    private void ActivateWeapon(WeaponData weaponData)
+    private void ActivateWeapon(WeaponData weaponData, bool initialize = false)
     {
         if (!activeWeapons.ContainsKey(weaponData.weaponName))
         {
-            var weapon = Instantiate(weaponData.prefab, transform).GetComponent<WeaponBehavior>();
-            weapon.weaponData = weaponData;
-            activeWeapons[weaponData.weaponName] = weapon;
-            
+            GameObject weaponObject = Instantiate(weaponData.prefab, transform);
+            WeaponBehavior weapon = weaponObject.GetComponent<WeaponBehavior>();
+
+            if (weapon != null)
+            {
+                weapon.weaponData = weaponData;
+                activeWeapons[weaponData.weaponName] = weapon;
+
+                if (initialize)
+                {
+                    weapon.LevelUp(1); // Initialize starting level
+                }
+                weaponObject.transform.position = new Vector3(-1000f, -1000f, 0f); // Move it far away from the map
+            }
         }
     }
 
-    public bool UpgradeWeapon(string weaponName)
+    public void FireAllWeapons(float playerSpeed)
     {
-        if (!weaponLevels.ContainsKey(weaponName)) return false;
-
-        int currentLevel = weaponLevels[weaponName];
-        if (currentLevel >= 8)
+        foreach (var weapon in activeWeapons.Values)
         {
-            Debug.Log($"{weaponName} is already at max level!");
-            LevelUpManager.Instance?.ShowWeaponUpgradeWarning($"{weaponName} is already at max level!");
-            return false; // Upgrade was not successful
+            if (weapon.CanFire())
+            {
+                weapon.Attack(currentFireDirection, playerSpeed);
+                weapon.ResetFireTime();
+            }
         }
-        // Calculate the cost
-        int cost = Mathf.RoundToInt(100 * Mathf.Pow(2, currentLevel));
-
-        // Check if the player has enough gold
-        if (PlayerStats.Instance.gold < cost)
-        {
-            Debug.Log($"Not enough gold! {weaponName} upgrade costs {cost} gold.");
-            LevelUpManager.Instance?.ShowWeaponUpgradeWarning($"Not enough gold! {weaponName} upgrade costs {cost} gold.");
-            return false; // Upgrade was not successful
-        }
-        // Deduct the cost and upgrade
-        PlayerStats.Instance.gold -= cost;
-        Debug.Log($"Upgraded {weaponName} to level {currentLevel + 1}. Cost: {cost} gold. Remaining gold: {PlayerStats.Instance.gold}.");
-
-        weaponLevels[weaponName]++;
-        int newLevel = weaponLevels[weaponName];
-        Debug.Log($"{weaponName} upgraded to Level {newLevel}.");
-
-        if (currentLevel == 0)
-        {
-            var weaponData = weaponDataList.Find(w => w.weaponName == weaponName);
-            if (weaponData != null) ActivateWeapon(weaponData);
-        }
-
-        if (activeWeapons.ContainsKey(weaponName))
-        {
-            activeWeapons[weaponName].LevelUp(newLevel);
-        }
-
-        return true; // Upgrade was successful
-    }
-
-    // Add a helper method to get the current cost of upgrading a weapon
-    public int GetUpgradeCost(string weaponName)
-    {
-        if (!weaponLevels.ContainsKey(weaponName)) return 0;
-        int currentLevel = weaponLevels[weaponName];
-        return Mathf.RoundToInt(100 * Mathf.Pow(2, currentLevel));
-    }
-
-
-    public int GetWeaponLevel(string weaponName)
-    {
-        return weaponLevels.ContainsKey(weaponName) ? weaponLevels[weaponName] : 0;
     }
 
     public void SetFireDirection(Vector2 direction)
@@ -114,74 +71,47 @@ public class WeaponManager : MonoBehaviour
         currentFireDirection = direction;
     }
 
-    private IEnumerator HandleMeleeWeapons()
+    public int GetUpgradeCost(string weaponName)
     {
-        while (true)
-        {
-            foreach (var weapon in activeWeapons.Values)
-            {
-                if (!weapon.weaponData.isRanged && weapon.CanFire())
-                {
-                    HandleMeleeAttack(weapon.weaponData, weaponLevels[weapon.weaponData.weaponName]);
-                    weapon.ResetFireTime();
-                }
-            }
-            yield return null;
-        }
+        if (!activeWeapons.ContainsKey(weaponName)) return 0;
+
+        int currentLevel = activeWeapons[weaponName].GetCurrentLevel();
+        return Mathf.RoundToInt(100 * Mathf.Pow(2, currentLevel));
     }
 
-    private void HandleMeleeAttack(WeaponData weaponData, int level)
+    public int GetWeaponLevel(string weaponName)
     {
-        Debug.Log($"Performing melee attack with {weaponData.weaponName} at level {level}");
+        if (!activeWeapons.ContainsKey(weaponName)) return 0;
 
-        if (!activeWeapons.TryGetValue(weaponData.weaponName, out WeaponBehavior weaponBehavior)) return;
+        return activeWeapons[weaponName].GetCurrentLevel();
+    }
+    public bool UpgradeWeapon(string weaponName)
+{
+    if (!activeWeapons.ContainsKey(weaponName)) return false;
 
-        // Determine the attack direction
-        Vector2 attackDirection = PlayerController.Instance.GetCurrentDirection();
+    var weapon = activeWeapons[weaponName];
+    int currentLevel = weapon.GetCurrentLevel();
 
-        // Trigger the melee attack
-        weaponBehavior.PerformMeleeAttack(attackDirection);
+    if (currentLevel >= 8)
+    {
+        Debug.Log($"{weaponName} is already at max level!");
+        return false;
     }
 
+    int cost = GetUpgradeCost(weaponName);
 
-
-    private IEnumerator FireRangedWeapons()
+    if (PlayerStats.Instance.gold < cost)
     {
-        while (true)
-        {
-            foreach (var weapon in activeWeapons.Values)
-            {
-                if (weapon.weaponData.isRanged && weapon.CanFire())
-                {
-                    FireRangedWeapon(weapon.weaponData, weaponLevels[weapon.weaponData.weaponName]);
-                    weapon.ResetFireTime();
-                }
-            }
-            yield return null;
-        }
+        Debug.Log($"Not enough gold! {weaponName} upgrade costs {cost} gold.");
+        return false;
     }
 
-    private void FireRangedWeapon(WeaponData weaponData, int level)
-    {
-        int projectileCount = Mathf.Min(level, 8);
-        float angleStep = 360f / projectileCount;
-        float startAngle = Vector2.SignedAngle(Vector2.right, currentFireDirection);
+    PlayerStats.Instance.gold -= cost;
+    weapon.LevelUp(currentLevel + 1);
 
-        for (int i = 0; i < projectileCount; i++)
-        {
-            float angle = startAngle + (angleStep * i);
-            Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+    Debug.Log($"{weaponName} upgraded to Level {currentLevel + 1}. Cost: {cost} gold. Remaining gold: {PlayerStats.Instance.gold}");
+    return true;
+}
 
-            var projectile = Instantiate(weaponData.prefab, firePoint.position, Quaternion.identity);
-            var behavior = projectile.GetComponent<WeaponBehavior>();
-
-            if (behavior != null)
-            {
-                float playerSpeed = PlayerStats.Instance.moveSpeed;
-                behavior.SetDirection(direction, playerSpeed); // Pass player's speed
-                Destroy(projectile, 10f);
-            }
-        }
-    }
 
 }

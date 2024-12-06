@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3829508380287503064}
   - component: {fileID: -6648999568154628679}
   - component: {fileID: -4756770042729901360}
-  - component: {fileID: 3564879805070802267}
+  - component: {fileID: -6008923173384018973}
   m_Layer: 0
   m_Name: Shuriken
   m_TagString: Untagged
@@ -159,7 +159,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.01, y: 6.01}
   m_EdgeRadius: 0
---- !u!114 &3564879805070802267
+--- !u!114 &-6008923173384018973
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,11 +168,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2876336612954471860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b901c8ad6a7d45a228484ef130cd1, type: 3}
+  m_Script: {fileID: 11500000, guid: 72ea07f45e2622442ae152a25b8fd261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 460
-  isRanged: 0
-  damageAmount: 50
-  cooldown: 0.5
   weaponData: {fileID: 11400000, guid: 1c13d8cd936774f49b8f5466a45c6f95, type: 2}

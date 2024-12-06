@@ -544583,8 +544583,6 @@ MonoBehaviour:
   weaponDataList:
   - {fileID: 11400000, guid: 1c13d8cd936774f49b8f5466a45c6f95, type: 2}
   - {fileID: 11400000, guid: c37d460b426d6d94286798db9bc6c50d, type: 2}
-  - {fileID: 11400000, guid: 7f7c44febb52949ce88f974ea465921c, type: 2}
-  firePoint: {fileID: 1636035083}
 --- !u!4 &722787906
 Transform:
   m_ObjectHideFlags: 0
@@ -692322,7 +692320,7 @@ Transform:
   m_GameObject: {fileID: 1636035082}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.043, y: -0.38, z: -1.2519032}
+  m_LocalPosition: {x: 0.043, y: -0.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -693429,7 +693427,7 @@ MonoBehaviour:
   damageLevel: 1
   lifestealLevel: 1
   regenLevel: 1
-  maxHealth: 500
+  maxHealth: 10000
   currentHealth: 0
   gold: 0
   experience: 0
@@ -693495,7 +693493,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f18c455a32b8a6c4e99eae766351d95f, type: 2}
   player: {fileID: 1962688399}
   initialSpawnRate: 2
-  maxEnemies: 500
   backgroundTilemap: {fileID: 600884065}
   recycleDistanceThreshold: 25
   timeBeforeScaling: 15

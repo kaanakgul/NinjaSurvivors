@@ -137,7 +137,7 @@ public class EnemyBehaviour : MonoBehaviour
             // Stop attacking the player
             StopCoroutine(attackCoroutine);
             attackCoroutine = null;
-            Debug.Log("Enemy stopped attacking the player.");
+      
         }
     }
 
@@ -150,7 +150,7 @@ public class EnemyBehaviour : MonoBehaviour
             while (true)
             {
                 playerStats.TakeDamage(enemyData.damage);
-                Debug.Log($"Enemy dealt {enemyData.damage} damage to the player.");
+              
                 yield return new WaitForSeconds(enemyData.attackSpeed); // Wait for attack cooldown
             }
         }
