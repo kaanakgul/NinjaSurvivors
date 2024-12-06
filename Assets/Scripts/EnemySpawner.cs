@@ -9,11 +9,7 @@ public class EnemySpawner : MonoBehaviour
     public List<EnemyData> enemyTypes; // List of different enemy ScriptableObjects
     public Transform player;
     public float initialSpawnRate = 2f;
-    private int maxEnemies = 100; // Base maximum number of enemies
-    private int initialMaxEnemies = 50; // Starting cap
-    private float timeToIncreaseCap = 60f; // Time in seconds to increase the cap
-    private int maxIncreasePerInterval = 20; // Maximum enemies to increase per interval
-
+    private int maxEnemies = 500;
 
     private Camera mainCamera;
     private List<GameObject> spawnedEnemies = new List<GameObject>();
@@ -41,7 +37,6 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(SpawnEnemies());
         StartCoroutine(UnlockEnemyTypes());
         StartCoroutine(ScaleSpawnRateOverTime());
-        StartCoroutine(ScaleEnemyCapOverTime());
     }
 
     private void Update()
@@ -50,14 +45,6 @@ public class EnemySpawner : MonoBehaviour
         // Adjust cap dynamically based on player's level or current stats
         int playerLevel = PlayerStats.Instance?.level ?? 1;
 
-        if (playerLevel < 5)
-        {
-            maxEnemies = Mathf.Max(initialMaxEnemies, 50 + playerLevel * 10);
-        }
-        else if (playerLevel >= 10)
-        {
-            maxEnemies = Mathf.Min(maxEnemies, 300); // Cap at 300 for high levels
-        }
     }
 
     private IEnumerator SpawnEnemies()
@@ -92,20 +79,6 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private IEnumerator ScaleEnemyCapOverTime()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(timeToIncreaseCap);
-
-            // Increase max enemies as time progresses
-            if (maxEnemies < 500) // Ensure there's an upper limit
-            {
-                maxEnemies += maxIncreasePerInterval;
-                Debug.Log($"Max enemies increased to {maxEnemies}");
-            }
-        }
-    }
 
     private IEnumerator UnlockEnemyTypes()
     {
@@ -165,26 +138,14 @@ public class EnemySpawner : MonoBehaviour
 
                 if (distanceToPlayer > recycleDistanceThreshold)
                 {
-                    // Calculate the direction of the enemy relative to the player
-                    Vector3 enemyDirection = (spawnedEnemies[i].transform.position - player.position).normalized;
+                    // Determine an angle to spawn the enemy away from its current position
+                    float randomAngle = Random.Range(0, 2 * Mathf.PI);
+                    Vector3 newDirection = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0);
 
-                    // Generate a new spawn position opposite or orthogonal to the current direction
-                    Vector3 newSpawnDirection;
-                    if (Random.value > 0.5f)
-                    {
-                        // Flip the direction to spawn on the opposite side
-                        newSpawnDirection = -enemyDirection;
-                    }
-                    else
-                    {
-                        // Generate a position orthogonal to the enemy's current direction
-                        newSpawnDirection = new Vector3(-enemyDirection.y, enemyDirection.x, 0).normalized;
-                    }
+                    // Calculate the new spawn position relative to the player
+                    Vector3 newSpawnPosition = player.position + newDirection * recycleDistanceThreshold;
 
-                    // Calculate a new spawn position using the player's position and spawn radius
-                    Vector3 newSpawnPosition = player.position + newSpawnDirection * recycleDistanceThreshold;
-
-                    // Ensure the position is valid (on the NavMesh and within tilemap bounds)
+                    // Ensure the position is valid (on NavMesh and within tilemap bounds)
                     if (NavMesh.SamplePosition(newSpawnPosition, out NavMeshHit hit, 1.0f, NavMesh.AllAreas) &&
                         tilemapBounds.Contains(backgroundTilemap.WorldToCell(newSpawnPosition)))
                     {
@@ -199,4 +160,5 @@ public class EnemySpawner : MonoBehaviour
             }
         }
     }
+
 }
