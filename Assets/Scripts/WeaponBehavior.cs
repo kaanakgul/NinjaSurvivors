@@ -5,7 +5,7 @@ public abstract class WeaponBehavior : MonoBehaviour
 {
     public WeaponData weaponData; // Reference to weapon data
     private float lastFireTime; // Time tracking for cooldowns
-    private int currentLevel = 1; // Current weapon level
+    private int currentLevel = 0; // Current weapon level
 
     protected Transform firePoint; // Point where weapons spawn projectiles
 
@@ -70,7 +70,17 @@ public abstract class WeaponBehavior : MonoBehaviour
         OnLevelUp(newLevel); // Call subclass-specific logic
     }
 
-    public int GetCurrentLevel() => currentLevel;
+    public int GetCurrentLevel()
+    {
+        if (WeaponManager.Instance != null)
+        {
+            return WeaponManager.Instance.GetWeaponLevel(weaponData.weaponName);
+        }
+
+        Debug.LogError("WeaponManager instance not found!");
+        return 0; // Return a default level if WeaponManager is missing
+    }
+
 
     // Abstract method for custom attack logic
     public abstract void Attack(Vector2 direction, float playerSpeed);

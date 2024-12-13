@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShurikenBehavior : WeaponBehavior
 {
 
-    private int additionalProjectiles = 0;
+    private int additionalProjectiles = -1;
 
     protected override void OnLevelUp(int newLevel)
     {

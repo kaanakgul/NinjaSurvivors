@@ -20,4 +20,4 @@ MonoBehaviour:
   minGold: 10
   maxGold: 40
   minExp: 5
-  maxExp: 20
+  maxExp: 10

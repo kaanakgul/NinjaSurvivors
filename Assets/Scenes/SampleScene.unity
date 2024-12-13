@@ -693427,7 +693427,7 @@ MonoBehaviour:
   damageLevel: 1
   lifestealLevel: 1
   regenLevel: 1
-  maxHealth: 10000
+  maxHealth: 500
   currentHealth: 0
   gold: 0
   experience: 0
