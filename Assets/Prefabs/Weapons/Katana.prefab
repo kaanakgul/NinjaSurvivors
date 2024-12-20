@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4065595669829835985}
   - component: {fileID: 1072106816258880497}
   - component: {fileID: 9170405676819020813}
+  - component: {fileID: 5808503255864013939}
   m_Layer: 0
   m_Name: Katana
   m_TagString: Untagged
@@ -158,3 +159,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.375, y: 0.875}
   m_EdgeRadius: 0
+--- !u!114 &5808503255864013939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6283494592960308031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 324b6eb4a105f8e43b55f66875366e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 7f7c44febb52949ce88f974ea465921c, type: 2}
+  attackArcAngle: 90
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  cutEffectPrefab: {fileID: 7614391878443900453, guid: 6aeab043b363c2f459c60dff184b4ff2, type: 3}

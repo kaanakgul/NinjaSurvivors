@@ -544583,6 +544583,7 @@ MonoBehaviour:
   weaponDataList:
   - {fileID: 11400000, guid: 1c13d8cd936774f49b8f5466a45c6f95, type: 2}
   - {fileID: 11400000, guid: c37d460b426d6d94286798db9bc6c50d, type: 2}
+  - {fileID: 11400000, guid: 7f7c44febb52949ce88f974ea465921c, type: 2}
 --- !u!4 &722787906
 Transform:
   m_ObjectHideFlags: 0
@@ -693427,9 +693428,9 @@ MonoBehaviour:
   damageLevel: 1
   lifestealLevel: 1
   regenLevel: 1
-  maxHealth: 500
+  maxHealth: 10000
   currentHealth: 0
-  gold: 0
+  gold: 10000
   experience: 0
   level: 1
   healthSlider: {fileID: 1873008399}
@@ -693637,7 +693638,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5.000061, y: 0}
+  m_AnchoredPosition: {x: -5.000122, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2078550778

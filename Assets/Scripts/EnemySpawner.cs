@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
     public Transform player;
     public float initialSpawnRate = 2f;
     private int maxEnemies = 500;
+    public static EnemySpawner instance;
 
     private Camera mainCamera;
     private List<GameObject> spawnedEnemies = new List<GameObject>();
@@ -28,6 +29,10 @@ public class EnemySpawner : MonoBehaviour
     public float spawnRadiusFromCamera = 1f;
     public float spawnBuffer = 0.5f;
 
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         mainCamera = Camera.main;
@@ -158,6 +163,19 @@ public class EnemySpawner : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    public void OnEnemyDeath(GameObject enemy)
+    {
+        if (spawnedEnemies.Contains(enemy))
+        {
+            spawnedEnemies.Remove(enemy); // Remove the enemy from the list
+            
+        }
+        else
+        {
+            return;
         }
     }
 

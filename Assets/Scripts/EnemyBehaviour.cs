@@ -102,6 +102,8 @@ public class EnemyBehaviour : MonoBehaviour
             playerStats.AddGold(goldReward);
             playerStats.AddExperience(expReward);
             playerStats.IncrementKillCount();
+            EnemySpawner.instance.OnEnemyDeath(this.gameObject);
+
         }
 
         Destroy(gameObject); // Destroy the enemy game object

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Axolotl
   m_EditorClassIdentifier: 
   prefab: {fileID: 6195579143891750045, guid: edd98d813521e9e448be00130d7e485f, type: 3}
-  health: 100
+  health: 50
   speed: 4
   damage: 15
   attackSpeed: 1
   minGold: 10
   maxGold: 40
-  minExp: 5
-  maxExp: 10
+  minExp: 100
+  maxExp: 105

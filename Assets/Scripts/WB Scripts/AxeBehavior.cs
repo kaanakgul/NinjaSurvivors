@@ -10,12 +10,7 @@ public class AxeBehavior : WeaponBehavior
 
     public override void Attack(Vector2 direction, float playerSpeed)
     {
-        if (firePoint == null)
-        {
-            Debug.LogError("FirePoint is not assigned. Make sure it is properly initialized.");
-            return;
-        }
-
+       
         int totalProjectiles = 1 + additionalProjectiles; // Base projectile + additional projectiles
         float angleStep = 360f / totalProjectiles; // Angle between projectiles
 
