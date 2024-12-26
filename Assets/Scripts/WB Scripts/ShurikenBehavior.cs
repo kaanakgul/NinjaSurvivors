@@ -13,22 +13,15 @@ public class ShurikenBehavior : WeaponBehavior
         if (newLevel == 2)
         {
             additionalProjectiles++;
-            Debug.Log($"Shuriken gained an additional projectile! Total: {additionalProjectiles}");
         }
         else if (newLevel <= 8)
         {
             additionalProjectiles++;
-            Debug.Log($"Shuriken leveled up! Additional projectiles: {additionalProjectiles}");
         }
     }
 
     public override void Attack(Vector2 direction, float playerSpeed)
     {
-        if (firePoint == null)
-        {
-            Debug.LogError("FirePoint is not assigned. Make sure it is properly initialized.");
-            return;
-        }
 
         int totalProjectiles = 1 + additionalProjectiles; // Base projectile + additional projectiles
         float angleStep = 360f / totalProjectiles; // Angle between projectiles

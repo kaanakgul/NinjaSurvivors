@@ -63,12 +63,10 @@ public class AxeBehavior : WeaponBehavior
         if (newLevel == 2)
         {
             additionalProjectiles++;
-            Debug.Log($"axe gained an additional projectile! Total: {additionalProjectiles}");
         }
         else if (newLevel <= 8)
         {
             additionalProjectiles++;
-            Debug.Log($"axe leveled up! Additional projectiles: {additionalProjectiles}");
         }
     }
 }

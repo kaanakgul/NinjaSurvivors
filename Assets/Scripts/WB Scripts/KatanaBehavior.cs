@@ -9,7 +9,6 @@ public class KatanaBehavior : WeaponBehavior
     private int comboSwings = 1; // Number of swings per attack
     private List<float> swingRanges = new List<float>(); // List to hold range for each swing
     private Vector2 lastDirection;
-    public GameObject cutEffectPrefab; // Reference to the cut effect prefab
 
 
     protected override void Start()
@@ -29,12 +28,6 @@ public class KatanaBehavior : WeaponBehavior
 
     public override void Attack(Vector2 direction, float playerSpeed)
     {
-        if (firePoint == null)
-        {
-            Debug.LogError("FirePoint is not assigned. Make sure it is properly initialized.");
-            return;
-        }
-
         lastDirection = direction;
 
         // Perform combo swings
