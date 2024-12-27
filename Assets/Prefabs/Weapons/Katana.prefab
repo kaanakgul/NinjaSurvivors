@@ -176,4 +176,4 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
-  cutEffectPrefab: {fileID: 7614391878443900453, guid: 6aeab043b363c2f459c60dff184b4ff2, type: 3}
+  katanaEffectPrefab: {fileID: 2783006845541467906, guid: 0e0a2f0cf959f6e42bb13619ed294f54, type: 3}

@@ -9,7 +9,7 @@ public class KatanaBehavior : WeaponBehavior
     private int comboSwings = 1; // Number of swings per attack
     private List<float> swingRanges = new List<float>(); // List to hold range for each swing
     private Vector2 lastDirection;
-
+    public GameObject katanaEffectPrefab; // Reference to the prefab
 
     protected override void Start()
     {
@@ -40,9 +40,24 @@ public class KatanaBehavior : WeaponBehavior
         {
             Vector2 attackDirection = GetSwingDirection(i);
             PerformSingleSwing(attackDirection, swingRanges[i]);
+            InstantiateKatanaEffect(attackDirection);
             yield return new WaitForSeconds(weaponData.cooldown / comboSwings); // Delay between swings
         }
     }
+
+    private void InstantiateKatanaEffect(Vector2 attackDirection)
+    {
+        Vector3 effectPosition = firePoint.position + (Vector3)attackDirection * weaponData.range;
+        GameObject effectInstance = Instantiate(katanaEffectPrefab, effectPosition, Quaternion.identity);
+
+        // Rotate to align with the attack direction
+        float angle = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
+        effectInstance.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        // Destroy the prefab after the animation finishes (adjust time as needed)
+        Destroy(effectInstance, 0.5f);
+    }
+
 
     private void PerformSingleSwing(Vector2 direction, float range)
     {
@@ -65,9 +80,8 @@ public class KatanaBehavior : WeaponBehavior
             }
         }
 
-        // Optional: Trigger visual or animation effect here
-        Debug.DrawRay(swingPosition, direction * range, Color.red, 0.5f);
     }
+
 
     private Vector2 GetSwingDirection(int swingIndex)
     {
