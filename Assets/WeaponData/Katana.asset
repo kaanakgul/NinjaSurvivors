@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Katana
   prefab: {fileID: 6283494592960308031, guid: 8cd197c2ca7a24e04a956ed6db9e1ef9, type: 3}
-  damageAmount: 500
-  cooldown: 4
-  isRanged: 0
+  damageAmount: 50
+  cooldown: 5
   Speed: 5
   rotationSpeed: 360
+  range: 1
+  travelRange: 50

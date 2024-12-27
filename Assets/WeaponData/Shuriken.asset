@@ -16,7 +16,7 @@ MonoBehaviour:
   prefab: {fileID: 2876336612954471860, guid: c3077d763008e1a4b831867aa2dded63, type: 3}
   damageAmount: 50
   cooldown: 1
-  isRanged: 1
   Speed: 10
   rotationSpeed: 360
   range: 5
+  travelRange: 50

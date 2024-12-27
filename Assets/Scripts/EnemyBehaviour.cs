@@ -81,6 +81,7 @@ public class EnemyBehaviour : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        StartCoroutine(BlinkRedEffect()); // Trigger the blinking effect
 
         if (currentHealth <= 0)
         {
@@ -157,4 +158,22 @@ public class EnemyBehaviour : MonoBehaviour
             }
         }
     }
+
+    private IEnumerator BlinkRedEffect()
+    {
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null)
+        {
+            Debug.LogWarning("No SpriteRenderer found on the enemy. Skipping red blink effect.");
+            yield break;
+        }
+
+        Color originalColor = spriteRenderer.color; // Save the original color
+        spriteRenderer.color = Color.red; // Change the color to red
+
+        yield return new WaitForSeconds(0.1f); // Duration of the red blink
+
+        spriteRenderer.color = originalColor; // Revert to the original color
+    }
+
 }

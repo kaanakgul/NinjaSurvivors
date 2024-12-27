@@ -5,25 +5,20 @@ using UnityEngine;
 public class ShurikenBehavior : WeaponBehavior
 {
 
-    private int additionalProjectiles = -1;
+    private int additionalProjectiles = 0;
 
     protected override void OnLevelUp(int newLevel)
     {
-        // Customize leveling logic
-        if (newLevel == 2)
-        {
+       if (newLevel <= 8)
+       {
             additionalProjectiles++;
-        }
-        else if (newLevel <= 8)
-        {
-            additionalProjectiles++;
-        }
+       }
     }
 
     public override void Attack(Vector2 direction, float playerSpeed)
     {
 
-        int totalProjectiles = 1 + additionalProjectiles; // Base projectile + additional projectiles
+        int totalProjectiles = additionalProjectiles; // Base projectile + additional projectiles
         float angleStep = 360f / totalProjectiles; // Angle between projectiles
 
         for (int i = 0; i < totalProjectiles; i++)

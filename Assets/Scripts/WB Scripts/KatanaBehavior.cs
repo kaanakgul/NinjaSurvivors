@@ -29,7 +29,10 @@ public class KatanaBehavior : WeaponBehavior
     public override void Attack(Vector2 direction, float playerSpeed)
     {
         lastDirection = direction;
-
+        if (!gameObject.activeInHierarchy)
+        {
+            return;
+        }
         // Perform combo swings
         StartCoroutine(PerformComboSwings());
     }
