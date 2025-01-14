@@ -23758,7 +23758,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50.024536, y: -23.619995}
+  m_AnchoredPosition: {x: 50.02466, y: -23.619995}
   m_SizeDelta: {x: 100.04901, y: 47.240005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &459196676
@@ -24055,7 +24055,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 50.025024, y: 32.200012}
+  m_AnchoredPosition: {x: 50.025146, y: 32.19995}
   m_SizeDelta: {x: 100.04901, y: 47.240005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &505601260
@@ -554186,7 +554186,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.45489502, y: -0.7932129}
+  m_AnchoredPosition: {x: 0.45483398, y: -0.7932129}
   m_SizeDelta: {x: -246.60033, y: -139.10251}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &607485932
@@ -554472,6 +554472,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7f7c44febb52949ce88f974ea465921c, type: 2}
   - {fileID: 11400000, guid: 6c85bd2adcd80494b8eeacddacd5f914, type: 2}
   - {fileID: 11400000, guid: 2418603ab1e9703459e23538a696a3be, type: 2}
+  - {fileID: 11400000, guid: a3e1da05799444365844011b4fde38d8, type: 2}
 --- !u!4 &722787906
 Transform:
   m_ObjectHideFlags: 0
@@ -554997,7 +554998,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -50.023987, y: -23.619995}
+  m_AnchoredPosition: {x: -50.023926, y: -23.619995}
   m_SizeDelta: {x: 100.049, y: 47.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &978760335
@@ -700979,10 +700980,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 536ea701712f8454da5290435c1a4c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeDescription: 
+  upgradeDescription: Upgrade The Sai
   upgradeType: 
-  weaponName: 
-  maxLevel: 10
+  weaponName: Sai
+  maxLevel: 8
   cost: 0
 --- !u!114 &1111544668
 MonoBehaviour:
@@ -701037,7 +701038,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Katana
+          m_StringArgument: Sai
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1111544667}
@@ -701707,8 +701708,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1421215528}
   - component: {fileID: 1421215531}
-  - component: {fileID: 1421215530}
   - component: {fileID: 1421215529}
+  - component: {fileID: 1421215532}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -701753,33 +701754,6 @@ MonoBehaviour:
   m_YawDamping: 0
   m_RollDamping: 0
   m_AngularDamping: 0
---- !u!114 &1421215530
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1421215527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
-  m_LookaheadTime: 0
-  m_LookaheadSmoothing: 0
-  m_LookaheadIgnoreY: 0
-  m_HorizontalDamping: 0.5
-  m_VerticalDamping: 0.5
-  m_ScreenX: 0.5
-  m_ScreenY: 0.5
-  m_DeadZoneWidth: 0
-  m_DeadZoneHeight: 0
-  m_SoftZoneWidth: 0.8
-  m_SoftZoneHeight: 0.8
-  m_BiasX: 0
-  m_BiasY: 0
-  m_CenterOnActivate: 1
 --- !u!114 &1421215531
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -701792,6 +701766,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1421215532
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421215527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4c41ac9245b87c4192012080077d830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Damping: 0
 --- !u!1 &1533424100
 GameObject:
   m_ObjectHideFlags: 0
@@ -703957,7 +703944,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5.000122, y: 0}
+  m_AnchoredPosition: {x: -5.000244, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2078550778

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8cff00bbee911c41aefb0f0f8a19d66, type: 3}
+  m_Name: Sai
+  m_EditorClassIdentifier: 
+  weaponName: Sai
+  prefab: {fileID: 5360469441306544030, guid: 162186e2d968849308a9ff93cbd54048, type: 3}
+  damageAmount: 30
+  cooldown: 2
+  Speed: 15
+  rotationSpeed: 0
+  range: 1
+  travelRange: 10
