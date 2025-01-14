@@ -2073,10 +2073,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 536ea701712f8454da5290435c1a4c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeDescription: 
+  upgradeDescription: Upgrade your slicing!
   upgradeType: 
-  weaponName: 
-  maxLevel: 10
+  weaponName: Katana
+  maxLevel: 8
   cost: 0
 --- !u!1 &340845260
 GameObject:
@@ -24195,7 +24195,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cecc08ccbf9f34db3b6610f634048eb5, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -24220,8 +24220,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -24259,7 +24259,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &517327722
@@ -24517,7 +24517,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 554196234}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0000012236}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24525,8 +24525,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 25.331, y: 6.9172}
+  m_AnchoredPosition: {x: 0, y: 0.00000095367}
+  m_SizeDelta: {x: 71.895, y: 25.979}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &554196236
 MonoBehaviour:
@@ -24550,8 +24550,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "YOU DIED\nPRESS R TO \nRESTART"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cecc08ccbf9f34db3b6610f634048eb5, type: 2}
+  m_sharedMaterial: {fileID: 5168024677576933188, guid: cecc08ccbf9f34db3b6610f634048eb5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -24575,8 +24575,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2
-  m_fontSizeBase: 2
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -24614,7 +24614,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &554196237
@@ -703734,9 +703734,9 @@ MonoBehaviour:
   damageLevel: 1
   lifestealLevel: 1
   regenLevel: 1
-  maxHealth: 100000
+  maxHealth: 500
   currentHealth: 0
-  gold: 100000
+  gold: 500
   experience: 0
   level: 1
   healthSlider: {fileID: 1873008399}
