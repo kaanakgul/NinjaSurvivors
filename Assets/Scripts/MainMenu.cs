@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
 
     public void OpenSettings()
     {
+        SceneManager.LoadScene("Settings"); // Replace with your game scene name.
         Debug.Log("Open Settings Menu"); // Add functionality later.
     }
 
