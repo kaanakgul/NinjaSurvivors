@@ -51,7 +51,7 @@ public class SaiBehavior : WeaponBehavior
         if (forwardShots.Count > 0 && Time.time >= lastForwardFire + fireDelay)
         {
             Vector2 direction = forwardShots.Dequeue();
-            FireSai(direction, PlayerStats.Instance.moveSpeed);
+            FireSai(direction, PlayerStats.Instance.moveSpeed, false);
             lastForwardFire = Time.time;
         }
 
@@ -59,15 +59,24 @@ public class SaiBehavior : WeaponBehavior
         if (backwardShots.Count > 0 && Time.time >= lastBackwardFire + fireDelay)
         {
             Vector2 direction = backwardShots.Dequeue();
-            FireSai(direction, PlayerStats.Instance.moveSpeed);
+            FireSai(direction, PlayerStats.Instance.moveSpeed, true);
             lastBackwardFire = Time.time;
         }
     }
 
-    private void FireSai(Vector2 direction, float playerSpeed)
+    private void FireSai(Vector2 direction, float playerSpeed, bool isBackward)
     {
+        Quaternion rotation;
+        if (isBackward)
+        {
+            rotation = Quaternion.Euler(0, 0, 90); // Rotate 90 degrees to the left
+        }
+        else
+        {
+            rotation = Quaternion.Euler(0, 0, -90); // Rotate 90 degrees to the right
+        }
         // Instantiate the Sai
-        GameObject sai = Instantiate(weaponData.prefab, firePoint.position, Quaternion.identity);
+        GameObject sai = Instantiate(weaponData.prefab, firePoint.position, rotation);
         Rigidbody2D rb = sai.GetComponent<Rigidbody2D>();
 
         if (rb != null)
