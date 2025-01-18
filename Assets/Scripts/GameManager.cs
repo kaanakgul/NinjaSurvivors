@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     [Header("UI References")]
     public GameObject restartPanel; // Restart panel UI
     public GameObject levelUpPanel; // Level-up panel UI
+
+    public GameObject pausePanel; // Paused panel UI
     private bool isGameOver = false; // Track if the game is over
 
     private void Awake()
@@ -38,6 +40,19 @@ public class GameManager : MonoBehaviour
         if (isGameOver && Input.GetKeyDown(KeyCode.R))
         {
             RestartGame();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Time.timeScale == 0f)
+            {
+                pausePanel.SetActive(false);
+                ResumeGame();
+            }
+            else
+            {
+                pausePanel.SetActive(true);
+                PauseGame();
+            }
         }
     }
 
@@ -119,5 +134,20 @@ public class GameManager : MonoBehaviour
             levelUpPanel.SetActive(false);
             ResumeGame();
         }
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void LoadSettingsMenu()
+    {
+        SceneManager.LoadScene("Settings");
+    }
+
+    public void LoadPrevScene()
+    {
+        SceneManager.LoadScene(PlayerPrefs.GetString("PrevScene"));
     }
 }
