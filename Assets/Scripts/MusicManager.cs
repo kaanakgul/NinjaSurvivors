@@ -2,8 +2,13 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
-    private static MusicManager instance; // Singleton instance to prevent duplicates
+    private static MusicManager instance; // Singleton instance
     private AudioSource audioSource;
+
+    public static MusicManager Instance
+    {
+        get { return instance; }
+    }
 
     void Awake()
     {
@@ -27,5 +32,19 @@ public class MusicManager : MonoBehaviour
             // If another instance exists, destroy this one
             Destroy(gameObject);
         }
+    }
+
+    public void SetVolume(float volume)
+    {
+        if (audioSource != null)
+        {
+            audioSource.volume = volume;
+            Debug.Log("SetVolume: " + volume);
+        }
+    }
+
+    public float GetVolume()
+    {
+        return audioSource != null ? audioSource.volume : 1f; // Default volume is 1
     }
 }

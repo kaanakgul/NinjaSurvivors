@@ -8,9 +8,14 @@ public class GameManager : MonoBehaviour
     [Header("UI References")]
     public GameObject restartPanel; // Restart panel UI
     public GameObject levelUpPanel; // Level-up panel UI
+    public GameObject SettingsMenu;
 
     public GameObject pausePanel; // Paused panel UI
     private bool isGameOver = false; // Track if the game is over
+
+    private int prevScene; //Previous scene index
+
+    private LevelUpManager levelUpManager; // Reference to the LevelUpManager script
 
     private void Awake()
     {
@@ -34,6 +39,18 @@ public class GameManager : MonoBehaviour
             levelUpPanel.SetActive(false);
     }
 
+    public void PlayGame()
+    {
+        SetPreveScene();
+        SceneManager.LoadScene(1); // Replace with your game scene name.
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Game Quit"); // Logs quit in editor (doesn't work in builds).
+    }
+
     private void Update()
     {
         // Check for restart input if the game is over
@@ -43,12 +60,11 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Time.timeScale == 0f)
+            if (pausePanel.activeSelf)
             {
-                pausePanel.SetActive(false);
                 ResumeGame();
             }
-            else
+            else if (Time.timeScale != 0)
             {
                 pausePanel.SetActive(true);
                 PauseGame();
@@ -71,6 +87,7 @@ public class GameManager : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1f;
+        pausePanel.SetActive(false);
         Debug.Log("Game Resumed.");
     }
 
@@ -138,16 +155,28 @@ public class GameManager : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        SetPreveScene();
+        SceneManager.LoadScene(0);
     }
 
     public void LoadSettingsMenu()
     {
-        SceneManager.LoadScene("Settings");
+        SettingsMenu.SetActive(true);
+    }
+
+    public void CloseSettingsMenu()
+    {
+        SettingsMenu.SetActive(false);
     }
 
     public void LoadPrevScene()
     {
-        SceneManager.LoadScene(PlayerPrefs.GetString("PrevScene"));
+        SceneManager.LoadScene(prevScene);
+    }
+
+    public void SetPreveScene()
+    {
+        prevScene = SceneManager.GetActiveScene().buildIndex;
+        Debug.Log("Prev Scene: " + prevScene);
     }
 }

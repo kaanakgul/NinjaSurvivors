@@ -17,7 +17,7 @@ MonoBehaviour:
   speed: 4
   damage: 25
   attackSpeed: 1
-  minGold: 10
-  maxGold: 40
-  minExp: 5
-  maxExp: 20
+  minGold: 35
+  maxGold: 50
+  minExp: 22
+  maxExp: 33

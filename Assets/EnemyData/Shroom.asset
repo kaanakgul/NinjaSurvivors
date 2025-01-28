@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Shroom
   m_EditorClassIdentifier: 
   prefab: {fileID: 2230099778332331954, guid: 8a51734b902bd034293cec14def4b150, type: 3}
-  health: 200
+  health: 250
   speed: 2
-  damage: 50
+  damage: 100
   attackSpeed: 0.8
-  minGold: 10
-  maxGold: 40
-  minExp: 5
-  maxExp: 20
+  minGold: 25
+  maxGold: 60
+  minExp: 15
+  maxExp: 30

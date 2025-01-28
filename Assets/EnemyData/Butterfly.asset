@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Butterfly
   m_EditorClassIdentifier: 
   prefab: {fileID: 1149394497410173200, guid: b327e1526dd8daf4b8808bfc4346cea5, type: 3}
-  health: 65
+  health: 50
   speed: 8
-  damage: 4
-  attackSpeed: 0.5
-  minGold: 10
-  maxGold: 40
-  minExp: 5
-  maxExp: 20
+  damage: 10
+  attackSpeed: 2
+  minGold: 15
+  maxGold: 55
+  minExp: 10
+  maxExp: 30

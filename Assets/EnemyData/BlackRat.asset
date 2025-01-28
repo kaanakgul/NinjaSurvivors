@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 834255288876157338, guid: 1f262a5770c484487b99304b3defab76, type: 3}
   health: 75
-  speed: 5
-  damage: 8
-  attackSpeed: 0.75
-  minGold: 10
-  maxGold: 40
-  minExp: 5
-  maxExp: 20
+  speed: 4
+  damage: 20
+  attackSpeed: 1.5
+  minGold: 15
+  maxGold: 50
+  minExp: 8
+  maxExp: 25

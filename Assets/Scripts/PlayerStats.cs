@@ -200,7 +200,7 @@ public class PlayerStats : MonoBehaviour
         if (lifestealMultiplier < 1f) // Cap at 100% lifesteal
         {
             lifestealMultiplier += 0.1f;
-            lifestealMultiplier = Mathf.Min(lifestealMultiplier, 1f); // Ensure it doesn’t exceed 1.0 (100%)
+            lifestealMultiplier = Mathf.Min(lifestealMultiplier, 1f); // Ensure it doesnï¿½t exceed 1.0 (100%)
             Debug.Log($"Lifesteal upgraded to {lifestealMultiplier * 100}%.");
             lifestealLevel += 1;
         }

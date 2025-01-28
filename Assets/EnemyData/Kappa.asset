@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Kappa
   m_EditorClassIdentifier: 
   prefab: {fileID: 3442728749327809765, guid: 1158af8effaf349f38c9abf72762a9d5, type: 3}
-  health: 150
+  health: 250
   speed: 4
-  damage: 30
+  damage: 70
   attackSpeed: 1.2
   minGold: 10
   maxGold: 40

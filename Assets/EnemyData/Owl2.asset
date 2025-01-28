@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Owl2
   m_EditorClassIdentifier: 
   prefab: {fileID: 1722810089205639537, guid: abf1cb01a14b1432b8c029c23737298d, type: 3}
-  health: 100
-  speed: 6
-  damage: 15
-  attackSpeed: 1
-  minGold: 10
-  maxGold: 40
-  minExp: 5
-  maxExp: 20
+  health: 200
+  speed: 4.2
+  damage: 25
+  attackSpeed: 2
+  minGold: 30
+  maxGold: 50
+  minExp: 20
+  maxExp: 35
